@@ -1,10 +1,10 @@
+import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
 
 class ExperienceCard extends StatelessWidget {
-  const ExperienceCard(this.title);
+  const ExperienceCard(this.data);
 
-  final String title;
-  final String description = 'Description';
+  final VideoContent data;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class ExperienceCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(title, style: textStyle),
-            Text(description, style: textStyle),
+            Text(data.title, style: textStyle),
+            Text(data.description, style: textStyle),
           ],
         ),
       ),

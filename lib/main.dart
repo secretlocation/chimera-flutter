@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/experience_card.dart';
-import 'data.dart';
+import 'package:chimera_flutter/data.dart';
 
 void main() => runApp(new MyApp());
 
@@ -52,9 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Create tiles
     final List<Widget> tiles = [];
-    for (var value in data) {
-      tiles.add(new ExperienceCard(value.title));
-    }
+    data.forEach((element) => tiles.add(new ExperienceCard(element)));
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
