@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ExperienceCard extends StatelessWidget {
-  const ExperienceCard();
+  const ExperienceCard(this.title);
 
-  final String title = 'Title';
+  final String title;
   final String description = 'Description';
 
   @override
