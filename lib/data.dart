@@ -1,27 +1,19 @@
-import 'package:flutter/painting.dart';
-
-class VideoContent
-{
-  VideoContent(String newTitle, String newDescription, String newThumbnail, String newUrl)
-  {
-    this.title = newTitle;
-    this.description = newDescription;
-    this.thumbnail = new AssetImage(newThumbnail);
-    this.videoUrl = newUrl;
-  }
-  String title;
-  String description;
-  AssetImage thumbnail;
-  String videoUrl;
-}
+import 'video_content.dart';
 
 final List<VideoContent> data = <VideoContent>[
-  VideoContent("Sample Video",
-              "Sample video description body Text",
-              "graphics/panda.png",
+  VideoContent("Big Buck Bunny",
+              "A large and lovable rabbit deals with three tiny bullies, led by a flying squirrel, who are determined to squelch his happiness.",
+              ["graphics/panda.png", "graphics/panda.png"],
+              60,
               "http://yt-dash-mse-test.commondatastorage.googleapis.com/media/car-20120827-87.mp4"),
-  VideoContent("Second Sample",
-              "Another sample video's description body text",
-              "graphics/panda.png",
+  VideoContent("Octopus Carpenter: the Movie",
+              "To find the octopus carpenter is to discover underwater treasure. The animation has the depth of the ocean itself. The adventure is both fun and fulfilling. And the lessons just keep on swimming.",
+              ["graphics/panda.png", "graphics/panda.png"],
+              60,
               "http://yt-dash-mse-test.commondatastorage.googleapis.com/media/motion-20120802-87.mp4"),
+  VideoContent("Vusr the Musical",
+      "Vusr is a white-label publishing tool that allows creators and publishers to reach and monetize a large audience across all VR platforms",
+      ["graphics/panda.png", "graphics/panda.png"],
+      60,
+      "http://yt-dash-mse-test.commondatastorage.googleapis.com/media/motion-20120802-87.mp4"),
 ];
