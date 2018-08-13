@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/experience_card.dart';
+import 'package:chimera_flutter/data.dart';
 
 void main() => runApp(new MyApp());
 
@@ -45,8 +46,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
   @override
   Widget build(BuildContext context) {
+
+    // Create tiles
+    final List<Widget> tiles = [];
+    data.forEach((element) => tiles.add(new ExperienceCard(element)));
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -64,19 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: new ListView(
           scrollDirection: Axis.vertical,
-          children: <Widget>[
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-            new ExperienceCard(),
-          ],
+          children: tiles,
         ),
       ),
     );
