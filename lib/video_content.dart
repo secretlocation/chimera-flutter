@@ -2,15 +2,22 @@ import 'package:flutter/painting.dart';
 
 class VideoContent
 {
-  VideoContent(String newTitle, String newDescription, String newThumbnail, String newUrl)
+  VideoContent(String newTitle, String newDescription, List<String> parallaxLayers, int runtime, String newUrl)
   {
     this.title = newTitle;
     this.description = newDescription;
-    this.thumbnail = new AssetImage(newThumbnail);
     this.videoUrl = newUrl;
+    this.runtime = runtime;
+
+    this.thumbnail = [];
+    parallaxLayers.forEach((layerString) =>
+      this.thumbnail.add( new AssetImage(layerString) )
+    );
   }
+
   String title;
   String description;
-  AssetImage thumbnail;
+  List<AssetImage> thumbnail;
+  int runtime;
   String videoUrl;
 }
