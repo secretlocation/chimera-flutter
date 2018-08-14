@@ -159,11 +159,4 @@ class VideoControlsBar extends StatelessWidget
       ],
     );
   }
-    /*return new Positioned(
-        top: 0.0,
-        bottom: 0.0,
-        left: 0.0,
-        right: 0.0,
-        child: new ButtonBar());
-  }*/
 }
