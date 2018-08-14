@@ -92,11 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
       var scaleAmount = 0.5;
       var scaleFactor = (1.0 - position.abs()) * scaleAmount;
 
-      var imageAsset = 'graphics/panda.png';
-      var image = Image.asset(
-        imageAsset,
-        fit: BoxFit.fitWidth,
-      );
       pages.add(Container(
           child: OverflowBox(
               maxWidth: double.infinity,
