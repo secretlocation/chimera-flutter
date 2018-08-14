@@ -154,7 +154,7 @@ class VideoControlsBar extends StatelessWidget
           ),
           new RaisedButton(
             child: new Text('Play'),
-            onPressed: null,
+            onPressed: (){},
           ),
           new SizedBox(
             width: 100.0,
@@ -164,7 +164,7 @@ class VideoControlsBar extends StatelessWidget
           ),
           new RaisedButton(
             child: new Text('Info'),
-            onPressed: null,
+            onPressed: (){},
           ),
         ],
       ),
