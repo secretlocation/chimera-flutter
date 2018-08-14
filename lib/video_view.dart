@@ -139,11 +139,10 @@ class VideoControlsBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new ButtonBar(
 
       children: <Widget>[
-        new FlatButton(
+        new RaisedButton(
           child: new Text('Play'),
           onPressed: null,
         ),
@@ -153,7 +152,7 @@ class VideoControlsBar extends StatelessWidget
             value: 0.5,
           ),
         ),
-        new FlatButton(
+        new RaisedButton(
           child: new Text('Info'),
           onPressed: null,
         ),
