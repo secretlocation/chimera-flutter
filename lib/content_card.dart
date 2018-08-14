@@ -1,5 +1,6 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
+import 'package:chimera_flutter/description_widget.dart';
 
 class ContentCard extends StatefulWidget {
   const ContentCard(this.data);
@@ -10,17 +11,17 @@ class ContentCard extends StatefulWidget {
 
 class _ContentCard extends State<ContentCard>{
 
-  bool shouldShowDescription = false;
-  String descriptionText = "";
+  bool shouldBeShown = false;
+  double opactiyForBox = 0.0;
 
   void showDescription(){
-    if(shouldShowDescription){
-      descriptionText = widget.data.description;
+    if(shouldBeShown){
+      opactiyForBox = 1.0;
     }
     else{
-      descriptionText = "";
+      opactiyForBox = 0.0;
     }
-    shouldShowDescription = !shouldShowDescription;
+    shouldBeShown = !shouldBeShown;
     setState(() { });
   }
 
@@ -51,20 +52,20 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           new Positioned(
-            left: (MediaQuery.of(context).size.width * 0.5 - 25),
-            top: (MediaQuery.of(context).size.width * 0.75),
+            left: (MediaQuery.of(context).size.width * 0.2),
+            top: (MediaQuery.of(context).size.width * 0.55),
             child:
-              new Text(descriptionText),
+            new Opacity(
+              opacity: opactiyForBox,
+                child:
+                  new DescriptionWidget(widget.data),
+              ),
           ),
-
-          //make information popupclass call function on that to show/hide
 
           new Positioned(
             left: (MediaQuery.of(context).size.width * 0.825),
-            top: (MediaQuery.of(context).size.width * 0.6),
-
+            top: (MediaQuery.of(context).size.width * 0.3),
             child: new Column(
-
               children: <Widget>[
                 new Text(
                  widget.data.runtime.toString()
@@ -73,12 +74,6 @@ class _ContentCard extends State<ContentCard>{
                     iconSize: 50.0,
                     icon: const Icon(Icons.info),
                     onPressed: () {showDescription();}
-                ),
-
-                new IconButton(
-                    iconSize: 50.0,
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {}
                 ),
               ],
             ),
