@@ -1,6 +1,7 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/description_widget.dart';
+import 'package:chimera_flutter/info_bar.dart';
 
 class ContentCard extends StatefulWidget {
   const ContentCard(this.data);
@@ -54,7 +55,7 @@ class _ContentCard extends State<ContentCard>{
               ),
           ),
 
-          new Positioned(
+          /*new Positioned(
             left: (width * 0.2),
             top: (width * 0.55),
             child:
@@ -63,23 +64,13 @@ class _ContentCard extends State<ContentCard>{
                 child:
                   new DescriptionWidget(widget.data),
               ),
-          ),
+          ),*/
 
           new Positioned(
-            left: (width * 0.825),
-            top: (height * 0.3),
-            child: new Column(
-              children: <Widget>[
-                new Text(
-                 widget.data.runtime.toString()
-                ),
-                new IconButton(
-                    iconSize: 50.0,
-                    icon: const Icon(Icons.info),
-                    onPressed: () {showDescription();}
-                ),
-              ],
-            ),
+            left: (width * 0.15),
+            top: (height * 0.8),
+            child:
+              new InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
           ),
 
         ],
