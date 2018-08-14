@@ -58,4 +58,3 @@ flutter:
   # see https://flutter.io/custom-fonts/#from-packages
   assets:
     - graphics/
-    - graphics/panda.png
