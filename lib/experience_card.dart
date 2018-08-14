@@ -1,5 +1,6 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
+import 'video_view.dart';
 
 class ExperienceCard extends StatelessWidget {
   const ExperienceCard(this.data);
@@ -18,6 +19,15 @@ class ExperienceCard extends StatelessWidget {
           children: <Widget>[
             Text(data.title, style: textStyle),
             Text(data.description, style: textStyle),
+            RaisedButton(
+              child: Text('Play me'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VideoView()),
+                );
+              },
+            ),
           ],
         ),
       ),
