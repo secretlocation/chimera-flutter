@@ -12,8 +12,8 @@ class _DescriptionWidget extends State<DescriptionWidget> {
   Widget build(BuildContext context) {
     return
       new Container(
-          color: Colors.black,
           padding: EdgeInsets.all(20.0),
+          margin: EdgeInsets.only(bottom: 40.0),
           child: Column(
             children: [
 
@@ -21,14 +21,14 @@ class _DescriptionWidget extends State<DescriptionWidget> {
                 widget.title,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white
+                    color: Colors.black
                 ),
               ),
 
               Text(
                 widget.description,
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.black
                 ),
               )
 

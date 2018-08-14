@@ -27,48 +27,53 @@ class _InfoBar extends State<InfoBar> {
   }
 
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
+    var widgets = <Widget>[];
+
+    if (barIsOpen) {
+      widgets.add(new DescriptionWidget(
+          widget.title, widget.description));
+    }
+
+    widgets.add(new Container(
+        constraints: BoxConstraints(maxHeight: 40.0),
+    ));
+
+    widgets.add(
+      Container(
+        margin: EdgeInsets.all(10.0),
+        child: Text(
+            "1:23",
+            style: TextStyle(color: Colors.black)
+        ))
+    );
+
+    widgets.add(
+      new Positioned(
+        bottom: -10.0,
+        right: 0.0,
+        child:
+        new IconButton(
+            iconSize: 50.0,
+            icon: buttonIcon,
+            onPressed: () {toggleInfoVisiblity();}
+        ),
+      ),
+    );
 
     return
-      new Stack(
-        children: <Widget>[
-          new Positioned(
-            child: new Image(
-                width: width * 0.8,
-                height: width * 0.075,
-                fit: BoxFit.cover,
-                image: new AssetImage('graphics/background-popup.png')
-            ),
-          ),
-          new Positioned(
-            left: 25.0,
-            top:5.0,
-            child:
-            new Text(widget.time),
-          ),
-
-          new Positioned(
-          top: -20.0,
-          left: MediaQuery.of(context).size.width * 0.6,
-            child:
-            new IconButton(
-                iconSize: 50.0,
-                icon: buttonIcon,
-                onPressed: () {toggleInfoVisiblity();}
-            ),
-          ),
-
-          new Positioned(
-            bottom: 25.0,
-            child:
-            new Opacity(
-              opacity: 1.0,
-              child:
-              new DescriptionWidget(widget.title, widget.description),
-            ),
-          ),
-        ],
+      Container(
+        decoration: new ShapeDecoration(
+            shadows: [BoxShadow(spreadRadius: 1.0)],
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0))
+            )
+        ),
+        child: Stack(
+            alignment: Alignment.bottomLeft,
+          children: widgets
+        )
       );
 
   }

@@ -13,15 +13,8 @@ class ContentCard extends StatefulWidget {
 class _ContentCard extends State<ContentCard>{
 
   bool shouldBeShown = false;
-  double opactiyForBox = 0.0;
 
   void showDescription(){
-    if(shouldBeShown){
-      opactiyForBox = 1.0;
-    }
-    else{
-      opactiyForBox = 0.0;
-    }
     shouldBeShown = !shouldBeShown;
     setState(() { });
   }
@@ -54,28 +47,17 @@ class _ContentCard extends State<ContentCard>{
                   onPressed: () {}
               ),
           ),
-
-          /*new Positioned(
-            left: (width * 0.2),
-            top: (width * 0.55),
-            child:
-            new Opacity(
-              opacity: opactiyForBox,
-                child:
-                  new DescriptionWidget(widget.data),
-              ),
-          ),*/
-
           new Positioned(
-            left: (width * 0.15),
-            top: (height * 0.8),
+            left: 20.0,
+            right: 20.0,
+            bottom: 20.0,
             child:
               new InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
           ),
 
         ],
       ),
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.bottomLeft,
       height: height,
       width: width,
     );
