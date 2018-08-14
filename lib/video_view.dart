@@ -139,24 +139,35 @@ class VideoControlsBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return new ButtonBar(
-
-      children: <Widget>[
-        new RaisedButton(
-          child: new Text('Play'),
-          onPressed: null,
-        ),
-        new SizedBox(
-          width: 160.0,
-          child: new LinearProgressIndicator(
-            value: 0.5,
+    return new Align(
+      alignment: Alignment.bottomCenter,
+      child: new ButtonBar(
+        children: <Widget>[
+          new SizedBox(
+            width: 40.0,
+            child: new RaisedButton(
+              child: new Text("<"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
-        ),
-        new RaisedButton(
-          child: new Text('Info'),
-          onPressed: null,
-        ),
-      ],
+          new RaisedButton(
+            child: new Text('Play'),
+            onPressed: null,
+          ),
+          new SizedBox(
+            width: 100.0,
+            child: new LinearProgressIndicator(
+              value: 0.5,
+            ),
+          ),
+          new RaisedButton(
+            child: new Text('Info'),
+            onPressed: null,
+          ),
+        ],
+      ),
     );
   }
 }
