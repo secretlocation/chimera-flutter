@@ -26,6 +26,9 @@ class _ContentCard extends State<ContentCard>{
   }
 
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return new Container(
       child: new Stack(
         children: <Widget>[
@@ -34,15 +37,15 @@ class _ContentCard extends State<ContentCard>{
               child:
                 new Image(
                     fit: BoxFit.cover,
-                    image: new AssetImage('graphics/panda.png')
+                    image: widget.data.thumbnail[0]
                 ),
-            height: MediaQuery.of(context).size.width,
-            width: MediaQuery.of(context).size.width,
+            height: height,
+            width: width,
           ),
 
           new Positioned(
-            left: (MediaQuery.of(context).size.width * 0.5 - 25),
-            top: (MediaQuery.of(context).size.width * 0.5 - 25),
+            left: (width * 0.5 - 25),
+            top: (height * 0.5 - 25),
             child:
               new IconButton(
                   iconSize: 50.0,
@@ -52,8 +55,8 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           new Positioned(
-            left: (MediaQuery.of(context).size.width * 0.2),
-            top: (MediaQuery.of(context).size.width * 0.55),
+            left: (width * 0.2),
+            top: (width * 0.55),
             child:
             new Opacity(
               opacity: opactiyForBox,
@@ -63,8 +66,8 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           new Positioned(
-            left: (MediaQuery.of(context).size.width * 0.825),
-            top: (MediaQuery.of(context).size.width * 0.3),
+            left: (width * 0.825),
+            top: (height * 0.3),
             child: new Column(
               children: <Widget>[
                 new Text(
@@ -82,8 +85,8 @@ class _ContentCard extends State<ContentCard>{
         ],
       ),
       alignment: Alignment.bottomRight,
-      height: MediaQuery.of(context).size.width,
-      width: MediaQuery.of(context).size.width,
+      height: height,
+      width: width,
     );
   }
 }

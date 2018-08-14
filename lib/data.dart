@@ -8,7 +8,7 @@ final List<VideoContent> data = <VideoContent>[
               "http://yt-dash-mse-test.commondatastorage.googleapis.com/media/car-20120827-87.mp4"),
   VideoContent("Octopus Carpenter: the Movie",
               "To find the octopus carpenter is to discover underwater treasure. The animation has the depth of the ocean itself. The adventure is both fun and fulfilling. And the lessons just keep on swimming.",
-              ["graphics/panda.png", "graphics/panda.png"],
+              ["graphics/chimera.png", "graphics/chimera.png"],
               60,
               "http://yt-dash-mse-test.commondatastorage.googleapis.com/media/motion-20120802-87.mp4"),
   VideoContent("Vusr the Musical",

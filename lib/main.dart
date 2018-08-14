@@ -46,14 +46,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final PageController _pageController =
+  PageController(viewportFraction: 1.0);
 
+  ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
 
   @override
   Widget build(BuildContext context) {
-
-    // Create tiles
-    final List<Widget> tiles = [];
-    data.forEach((element) => tiles.add(new ContentCard(element)));
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -62,20 +61,58 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return new Scaffold(
-      appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new ListView(
+      body:           NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification notification) {
+          if (notification.depth == 0 && notification is ScrollUpdateNotification) {
+            pageCurrent.value = _pageController.page;
+            setState(() {});
+          }
+          return false;
+        },
+        child: PageView(
           scrollDirection: Axis.vertical,
-          children: tiles,
+          controller: _pageController,
+          children: _buildPages(),
         ),
-      ),
+      )
     );
+  }
+
+  Iterable<Widget> _buildPages() {
+
+    // Create tiles
+    final List<Widget> tiles = [];
+    data.forEach((element) => tiles.add(new ContentCard(element)));
+
+    final List<Widget> pages = <Widget>[];
+
+    for (int index = 0; index < tiles.length; index++) {
+      double position = (pageCurrent.value - index);
+      var rotateFactor = ((position * 1.0));
+      var scaleAmount = 0.5;
+      var scaleFactor = (1.0 - position.abs()) * scaleAmount;
+
+      var imageAsset = 'graphics/panda.png';
+      var image = Image.asset(
+        imageAsset,
+        fit: BoxFit.fitWidth,
+      );
+      pages.add(Container(
+          child: OverflowBox(
+              maxWidth: double.infinity,
+              child: Transform(
+                alignment: FractionalOffset.center,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..rotateX(rotateFactor)
+                  ..scale(1.0 + scaleAmount - scaleFactor.abs(), 1.0 + scaleAmount - scaleFactor.abs())
+                ,
+                child: tiles[index],
+              )
+          )
+      ));
+    }
+    return pages;
   }
 }
 
