@@ -1,6 +1,5 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
-import 'package:chimera_flutter/info_button.dart';
 
 class ContentCard extends StatefulWidget {
   const ContentCard(this.data);
@@ -58,6 +57,8 @@ class _ContentCard extends State<ContentCard>{
               new Text(descriptionText),
           ),
 
+          //make information popupclass call function on that to show/hide
+
           new Positioned(
             left: (MediaQuery.of(context).size.width * 0.825),
             top: (MediaQuery.of(context).size.width * 0.6),
@@ -73,7 +74,7 @@ class _ContentCard extends State<ContentCard>{
                     icon: const Icon(Icons.info),
                     onPressed: () {showDescription();}
                 ),
-                //new InfoButton(),
+
                 new IconButton(
                     iconSize: 50.0,
                     icon: const Icon(Icons.settings),
