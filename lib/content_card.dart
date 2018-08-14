@@ -1,6 +1,7 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/description_widget.dart';
+import 'video_view.dart';
 
 class ContentCard extends StatefulWidget {
   const ContentCard(this.data);
@@ -15,12 +16,6 @@ class _ContentCard extends State<ContentCard>{
   double opactiyForBox = 0.0;
 
   void showDescription(){
-    if(shouldBeShown){
-      opactiyForBox = 1.0;
-    }
-    else{
-      opactiyForBox = 0.0;
-    }
     shouldBeShown = !shouldBeShown;
     setState(() { });
   }
@@ -28,6 +23,19 @@ class _ContentCard extends State<ContentCard>{
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    var infoTextElement = shouldBeShown ?
+      new Positioned(
+        left: (width * 0.2),
+        top: (width * 0.55),
+        child:
+        new Opacity(
+          opacity: 1.0,
+          child:
+          new DescriptionWidget(widget.data),
+        ),
+      )
+      : null;
 
     return new Container(
       child: new Stack(
@@ -50,20 +58,16 @@ class _ContentCard extends State<ContentCard>{
               new IconButton(
                   iconSize: 50.0,
                   icon: const Icon(Icons.play_circle_outline),
-                  onPressed: () {}
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => VideoView()),
+                    );
+                  }
               ),
           ),
 
-          new Positioned(
-            left: (width * 0.2),
-            top: (width * 0.55),
-            child:
-            new Opacity(
-              opacity: opactiyForBox,
-                child:
-                  new DescriptionWidget(widget.data),
-              ),
-          ),
+          infoTextElement,
 
           new Positioned(
             left: (width * 0.825),
@@ -82,7 +86,7 @@ class _ContentCard extends State<ContentCard>{
             ),
           ),
 
-        ],
+        ].where((child) => child != null).toList(),
       ),
       alignment: Alignment.bottomRight,
       height: height,
