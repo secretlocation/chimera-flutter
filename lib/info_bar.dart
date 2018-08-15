@@ -40,7 +40,7 @@ class _InfoBar extends State<InfoBar> {
         color: Colors.white,
         margin: EdgeInsets.all(15.0),
         child: Text(
-            convertSecondsToTimecode(widget.runtime),
+            convertMsToTimecode(widget.runtime),
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey
@@ -54,6 +54,7 @@ class _InfoBar extends State<InfoBar> {
         right: 0.0,
         child:
         new IconButton(
+          color: Colors.grey,
           alignment: Alignment.bottomRight,
             iconSize: 50.0,
             icon: (isExpanded)? buttonIconDown : buttonIconUp,

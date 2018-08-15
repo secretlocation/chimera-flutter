@@ -218,7 +218,3 @@ String convertMsToTimecode(int ms) {
   Duration dur = Duration(milliseconds: ms);
   return dur.inMinutes.toString() + ":" + (dur.inSeconds.remainder(60)).toString().padLeft(2, '0');
 }
-
-String convertSecondsToTimecode(int seconds) {
-  return (seconds/60).floor().toString() + ":" + (seconds%60).toString().padLeft(2, "0");
-}
