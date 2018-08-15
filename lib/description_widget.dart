@@ -12,14 +12,16 @@ class _DescriptionWidget extends State<DescriptionWidget> {
   Widget build(BuildContext context) {
     return
       new Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.only( top: 60.0, left: 20.0, right: 20.0),
           margin: EdgeInsets.only(bottom: 40.0),
           alignment: Alignment.topLeft,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
               Text(
                 widget.title,
+                textAlign: TextAlign.left,
                 overflow: TextOverflow.clip,
                 style: TextStyle(
                     fontSize: 20.0,
@@ -27,9 +29,9 @@ class _DescriptionWidget extends State<DescriptionWidget> {
                     color: Colors.black
                 ),
               ),
-
               Text(
                 widget.description,
+                textAlign: TextAlign.left,
                 overflow: TextOverflow.clip,
                 style: TextStyle(
                     fontSize: 18.0,

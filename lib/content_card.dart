@@ -54,7 +54,7 @@ class _ContentCard extends State<ContentCard>{
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => VideoView()),
+                    MaterialPageRoute(builder: (context) => VideoView(currentVideo:widget.data)),
                   );
                 }
             ),

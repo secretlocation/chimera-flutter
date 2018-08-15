@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'video_content.dart';
 
 class VideoView extends StatefulWidget
 {
+  VideoContent currentVideo;
+  VideoView({Key key, @required this.currentVideo}) : super(key: key);
   @override
   _VideoViewState createState() => _VideoViewState();
 }
@@ -42,8 +45,7 @@ class _VideoViewState extends State<VideoView> {
 
     // Create a video player with listeners to re-render on init and on play
     _controller = VideoPlayerController.network(
-      // Example content sourced from https://github.com/SamsungInternet/examples
-      'https://github.com/SamsungInternet/examples/blob/master/360-video/paris-by-diego.mp4?raw=true',
+      widget.currentVideo.videoUrl
     )
       ..addListener(playingListener)
       ..setVolume(1.0);
@@ -66,11 +68,8 @@ class _VideoViewState extends State<VideoView> {
       ..setVolume(0.0);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return new Stack(
       children: <Widget>[
         new VideoPlayer(_controller),
