@@ -16,7 +16,7 @@ class LayeredImageState extends State<LayeredImage> {
 
     double imageWidth = MediaQuery.of(context).size.width;
     double imageHeight = MediaQuery.of(context).size.height;
-    List<double> modifiers = [0.4,0.3,0.2,0.1,0.0];
+    List<double> modifiers = [0.4,0.35,0.3,0.25,0.1];
     var imageLayers = <Widget>[];
     
     for(int i = 0; i < widget.images.length; i++)
