@@ -17,7 +17,7 @@ class _InfoBar extends State<InfoBar> {
   Icon buttonIconDown =  Icon(Icons.arrow_drop_down);
   bool isExpanded = false;
 
-  void toggleInfoVisiblity(){
+  void toggleInfoVisibility(){
     isExpanded = ! isExpanded;
     setState(() { });
   }
@@ -56,7 +56,7 @@ class _InfoBar extends State<InfoBar> {
           alignment: Alignment.bottomRight,
             iconSize: 50.0,
             icon: (isExpanded)? buttonIconDown : buttonIconUp,
-            onPressed: () {toggleInfoVisiblity();}
+            onPressed: () {toggleInfoVisibility();}
         ),
       ),
     );
