@@ -58,7 +58,12 @@ class _ContentCard extends State<ContentCard>{
                 },
               child: new ConstrainedBox(
                 constraints: new BoxConstraints.expand(),
-                child: new Image(image: widget.data.playButton, fit: BoxFit.contain, gaplessPlayback: true),
+                child: Stack(
+                  children: <Widget>[
+                    Image(image: widget.data.playButton, fit: BoxFit.contain, gaplessPlayback: true),
+                    Image(image: AssetImage("graphics/play.png"), fit: BoxFit.contain, gaplessPlayback: true),
+                  ],
+                ),
               ),
             ),
           ),

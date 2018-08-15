@@ -77,8 +77,8 @@ class _VideoViewState extends State<VideoView> {
     var childs = <Widget>[];
 
     childs.add(VideoPlayer(_controller));
-    if(!_isLoaded) childs.add(LoadingSpinner());
-    childs.add(VideoControlsBottomBar(_controller));
+    if(!_isLoaded) childs.add(LoadingSpinner(widget.currentVideo.customColor));
+    childs.add(VideoControlsBottomBar(_controller, widget.currentVideo));
 
     return new Stack(
       children: childs,
@@ -144,8 +144,9 @@ class VideoControlsBottomBar extends StatelessWidget
 {
 
   VideoPlayerController controller;
+  VideoContent content;
 
-  VideoControlsBottomBar(this.controller);
+  VideoControlsBottomBar(this.controller, this.content);
 
   @override
   Widget build(BuildContext context) {
@@ -157,13 +158,17 @@ class VideoControlsBottomBar extends StatelessWidget
 
     widgets.add(
       Align(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.bottomCenter,
         child:
           new SizedBox(
             width: width,
             height: 15.0,
             child: new VideoProgressIndicator(
               controller,
+              colors: VideoProgressColors(
+                playedColor: content.customColor,
+                backgroundColor: Color(0xFFF1EFF1),
+              ),
               allowScrubbing: true,
               padding: EdgeInsets.all(0.0),
             ),
@@ -205,58 +210,23 @@ class VideoControlsBottomBar extends StatelessWidget
                   borderRadius: BorderRadius.all(Radius.circular(10.0))
               )
           ),
-          child: Stack(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            child: Stack(
               alignment: Alignment.bottomLeft,
               children: widgets
-          )
+            ),
+          ),
         ),
-      );
-
-
-
-
-      /* new Container(
-        constraints: BoxConstraints(minWidth: 100.0, maxWidth: 800-40.0),
-        decoration: new ShapeDecoration(
-            shadows: [BoxShadow(spreadRadius: 1.0)],
-            color: Colors.white,
-            shape: Border.all(),
-        ),
-        child: new ButtonBar(
-          children: <Widget>[
-            new SizedBox(
-              width: 40.0,
-              child: new RaisedButton(
-                child: new Text("<"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            new RaisedButton(
-              child: new Text(convertMsToTimecode(1234)),
-              onPressed: (){},
-            ),
-            new SizedBox(
-              width: 100.0,
-              child: new VideoProgressIndicator(
-                controller,
-                allowScrubbing: true,
-              ),
-            ),
-            new RaisedButton(
-              child: new Text('Info'),
-              onPressed: (){},
-            ),
-          ],
-        ),
-      ),
-    );*/
+    );
   }
 }
 
 class LoadingSpinner extends StatelessWidget
 {
+  Color mainColor;
+  LoadingSpinner(this.mainColor);
+
   @override
   Widget build(BuildContext context) {
 
@@ -271,7 +241,9 @@ class LoadingSpinner extends StatelessWidget
       top: (height - spinnerHeight) * 0.5,
       width: spinnerWidth,
       height: spinnerHeight,
-      child: new CircularProgressIndicator(),
+      child: new CircularProgressIndicator(
+        backgroundColor: mainColor,
+      ),
     );
   }
 }
