@@ -30,12 +30,7 @@ class _ContentCard extends State<ContentCard>{
         children: <Widget>[
 
           Positioned(
-              child:
-//              LayeredImage(),
-              Image(
-                    fit: BoxFit.cover,
-                    image: widget.data.thumbnail[0]
-                ),
+              child: LayeredImage(widget.scrollPosition, widget.data.thumbnail),
             height: height,
             width: width,
           ),
