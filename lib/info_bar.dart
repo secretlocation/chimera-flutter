@@ -27,7 +27,12 @@ class _InfoBar extends State<InfoBar> {
     var widgets = <Widget>[];
 
 
-    widgets.add(DescriptionWidget(widget.title, widget.description));
+    widgets.add(OverflowBox(
+      alignment: Alignment.topLeft,
+      maxHeight: double.infinity,
+      maxWidth: width - 40,
+      child:DescriptionWidget(widget.title, widget.description))
+    );
 
     widgets.add(
       Container(
@@ -58,7 +63,7 @@ class _InfoBar extends State<InfoBar> {
     return
       AnimatedContainer(
         duration: Duration(milliseconds: 250),
-        curve: Curves.linear,
+        curve: Curves.fastOutSlowIn,
         margin: EdgeInsets.all(20.0),
         constraints: BoxConstraints(
             minWidth: 100.0,

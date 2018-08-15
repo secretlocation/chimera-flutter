@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'video_content.dart';
 
 class VideoView extends StatefulWidget
 {
+  VideoContent currentVideo;
+  VideoView({Key key, @required this.currentVideo}) : super(key: key);
   @override
   _VideoViewState createState() => _VideoViewState();
 }
@@ -10,6 +13,7 @@ class VideoView extends StatefulWidget
 class _VideoViewState extends State<VideoView> {
 
   VideoPlayerController _controller;
+  bool _isLoaded = false;
   bool _isPlaying = false;
   VoidCallback playingListener;
 
@@ -26,6 +30,7 @@ class _VideoViewState extends State<VideoView> {
   }
 
   void playAfterInit(_){
+    _isLoaded = true;
     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
     setState(() {});
     _controller.play();
@@ -40,10 +45,11 @@ class _VideoViewState extends State<VideoView> {
   void initState() {
     super.initState();
 
+    _isLoaded = false;
+
     // Create a video player with listeners to re-render on init and on play
     _controller = VideoPlayerController.network(
-      // Example content sourced from https://github.com/SamsungInternet/examples
-      'https://github.com/SamsungInternet/examples/blob/master/360-video/paris-by-diego.mp4?raw=true',
+      widget.currentVideo.videoUrl
     )
       ..addListener(playingListener)
       ..setVolume(1.0);
@@ -66,16 +72,16 @@ class _VideoViewState extends State<VideoView> {
       ..setVolume(0.0);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    var childs = <Widget>[];
+
+    childs.add(VideoPlayer(_controller));
+    if(!_isLoaded) childs.add(LoadingSpinner());
+    childs.add(VideoControlsBar(_controller));
 
     return new Stack(
-      children: <Widget>[
-        new VideoPlayer(_controller),
-        new VideoControlsBar(_controller),
-      ],
+      children: childs,
     );
   }
 }
@@ -183,6 +189,27 @@ class VideoControlsBar extends StatelessWidget
           ],
         ),
       ),
+    );
+  }
+}
+
+class LoadingSpinner extends StatelessWidget
+{
+  @override
+  Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    double spinnerWidth;
+    double spinnerHeight = spinnerWidth = width * 0.2;
+
+    return new Positioned(
+      left: (width - spinnerWidth) * 0.5,
+      top: (height - spinnerHeight) * 0.5,
+      width: spinnerWidth,
+      height: spinnerHeight,
+      child: new CircularProgressIndicator(),
     );
   }
 }

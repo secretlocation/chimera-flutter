@@ -48,18 +48,22 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           Positioned(
-            left: (width * 0.5 - 25),
-            top: (height * 0.5 - 25),
+            left: (width * 0.35),
+            top: (height * 0.5 - (width * 0.15)),
+            width: (width * 0.3),
+            height: (width * 0.3),
             child:
-            IconButton(
-                iconSize: 50.0,
-                icon: const Icon(Icons.play_circle_outline),
+            FlatButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => VideoView()),
+                    MaterialPageRoute(builder: (context) => VideoView(currentVideo:widget.data)),
                   );
-                }
+                },
+              child: new ConstrainedBox(
+                constraints: new BoxConstraints.expand(),
+                child: new Image(image: widget.data.playButton, fit: BoxFit.cover, gaplessPlayback: true),
+              ),
             ),
           ),
 
