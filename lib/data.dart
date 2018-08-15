@@ -31,7 +31,7 @@ final List<VideoContent> data = <VideoContent>[
       ["graphics/panda.png", "graphics/panda.png"],
       60,
       "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4",
-      "graphics/playblue.png"),
+      "graphics/panda.png"),
   VideoContent("Octopus Carpenter: the Movie",
       "To find the octopus carpenter is to discover underwater treasure. The animation has the depth of the ocean itself. The adventure is both fun and fulfilling. And the lessons just keep on swimming.",
       ["graphics/chimera.png", "graphics/chimera.png"],
