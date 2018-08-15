@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/data.dart';
 import 'package:chimera_flutter/content_card.dart';
-import 'video_view.dart';
+import 'package:sensors/sensors.dart';
+import 'dart:async';
 
 void main() => runApp(new MyApp());
 
@@ -53,6 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
   ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
   ValueNotifier<double> pageScrollPosition = ValueNotifier<double>(0.0);
 
+  final double accel_alpha = 0.01;
+
+  List<double> _gyroscopeValues;
+  List<double> _accelerometerValues;
+  List<double> _sensorFusion = [0.0, 0.0, 0.0];
+
+  List<StreamSubscription<dynamic>> _streamSubscriptions =
+  <StreamSubscription<dynamic>>[];
+
   @override
   Widget build(BuildContext context) {
 
@@ -62,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return new Scaffold(
       backgroundColor: Colors.black,
       body: NotificationListener<ScrollNotification>(
@@ -89,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final List<Widget> tiles = [];
     for (int i = 0; i < data.length; i++) {
       var element = data[i];
-      tiles.add(new ContentCard(element, pageScrollPosition.value - (i * height)));
+      tiles.add(new ContentCard(element, pageScrollPosition.value - (i * height), _sensorFusion));
     }
 
     final List<Widget> pages = <Widget>[];
@@ -116,5 +127,42 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
     }
     return pages;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
+      setState(() {
+        _gyroscopeValues = <double>[event.x, event.y, event.z];
+        updateSensorFusion();
+      });
+    }));
+
+    _streamSubscriptions.add(accelerometerEvents.listen((AccelerometerEvent event) {
+      setState(() {
+        _accelerometerValues = <double>[event.x, event.y, event.z];
+        updateSensorFusion();
+      });
+    }));
+
+  }
+
+  void updateSensorFusion() {
+    if (_gyroscopeValues == null || _accelerometerValues == null) return null;
+    List<double> temp = [_gyroscopeValues[0] + _accelerometerValues[0], _gyroscopeValues[1] + _accelerometerValues[1], 0.0];
+    _sensorFusion = [
+      _sensorFusion[0] + accel_alpha * (temp[0] - _sensorFusion[0]),
+      _sensorFusion[1] + accel_alpha * (temp[1] - _sensorFusion[1]),
+      0.0];
   }
 }
