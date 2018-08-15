@@ -37,12 +37,13 @@ class _InfoBar extends State<InfoBar> {
 
     widgets.add(
       Container(
+        color: Colors.white,
         margin: EdgeInsets.all(15.0),
         child: Text(
             convertSecondsToTimecode(widget.runtime),
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.black
+                color: Colors.grey
             )
         ))
     );
