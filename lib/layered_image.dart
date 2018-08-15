@@ -10,7 +10,7 @@ class LayeredImage extends StatefulWidget {
 }
 
 class LayeredImageState extends State<LayeredImage> {
-  final List<double> modifiers = [0.6,0.5,0.4,0.3,0.1];
+  final List<double> modifiers = [0.7,0.6,0.5,0.4,0.2];
 
   @override
   Widget build(BuildContext context) {
