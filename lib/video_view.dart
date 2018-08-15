@@ -214,13 +214,11 @@ class LoadingSpinner extends StatelessWidget
   }
 }
 
-String convertMsToTimecode(int ms)
-{
-  String result;
-  
+String convertMsToTimecode(int ms) {
   Duration dur = Duration(milliseconds: ms);
-  result = dur.inMinutes.toString();
-  result += ":" + (dur.inSeconds.remainder(60)).toString().padLeft(2, '0');
+  return dur.inMinutes.toString() + ":" + (dur.inSeconds.remainder(60)).toString().padLeft(2, '0');
+}
 
-  return result;
+String convertSecondsToTimecode(int seconds) {
+  return (seconds/60).floor().toString() + ":" + (seconds%60).toString().padLeft(2, "0");
 }
