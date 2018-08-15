@@ -41,7 +41,7 @@ class _ContentCard extends State<ContentCard>{
             bottom: 0.0,
             right: 0.0,
             child:
-              new InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+              InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
           ),
 
           Positioned(
