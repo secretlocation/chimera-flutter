@@ -8,8 +8,13 @@ class VideoControls extends StatefulWidget
   VideoPlayerController controller;
   VideoContent content;
   bool isLoaded = false;
+  bool isInteractable = false;
 
-  VideoControls({Key key, @required this.controller, this.content, this.isLoaded}) : super(key: key);
+  VideoControls({Key key,
+    @required this.controller,
+    @required this.content,
+    @required this.isLoaded,
+    @required this.isInteractable}) : super(key: key);
   @override
   _VideoControlsState createState() => _VideoControlsState();
 }
@@ -44,25 +49,28 @@ class _VideoControlsState extends State<VideoControls>
 
     var childs = <Widget>[];
 
-    childs.add(
-        Positioned(
-          left: (width * 0.3),
-          top: (height * 0.5 - (width * 0.2)),
-          width: (width * 0.4),
-          height: (width * 0.4),
-          child: GestureDetector(
-            onTap: () {
-              if(_isPlaying){
-                widget.controller.pause();
-              }
-              else {
-                widget.controller.play();
-              }
-            },
-            child: PlayPauseButton(backgroundImage: widget.content.playButton, isPause: _isPlaying),
-          ),
-        )
-    );
+    if(widget.isInteractable) {
+      childs.add(
+          Positioned(
+            left: (width * 0.3),
+            top: (height * 0.5 - (width * 0.2)),
+            width: (width * 0.4),
+            height: (width * 0.4),
+            child: GestureDetector(
+              onTap: () {
+                if (_isPlaying) {
+                  widget.controller.pause();
+                }
+                else {
+                  widget.controller.play();
+                }
+              },
+              child: PlayPauseButton(backgroundImage: widget.content.playButton,
+                  isPause: _isPlaying),
+            ),
+          )
+      );
+    }
     childs.add(VideoControlsBottomBar(widget.controller, widget.content));
 
     return new Stack(

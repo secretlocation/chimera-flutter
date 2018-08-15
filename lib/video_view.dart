@@ -77,7 +77,10 @@ class _VideoViewState extends State<VideoView> {
         AnimatedOpacity(
           opacity: _controlsVisible ? 1.0: 0.0,
           duration: Duration(milliseconds: 200),
-          child: VideoControls(controller: _controller, content: widget.currentVideo, isLoaded: _isLoaded,),
+          child: VideoControls(controller: _controller,
+            content: widget.currentVideo,
+            isLoaded: _isLoaded,
+            isInteractable: _controlsVisible,),
         ));
 
     return Stack(
