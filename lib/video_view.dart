@@ -143,6 +143,8 @@ class VideoControlsBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+
+
     return new Align(
       alignment: Alignment.bottomCenter,
       child: new Container(
@@ -164,7 +166,7 @@ class VideoControlsBar extends StatelessWidget
               ),
             ),
             new RaisedButton(
-              child: new Text('Play'),
+              child: new Text(convertMsToTimecode(1234)),
               onPressed: (){},
             ),
             new SizedBox(
@@ -183,4 +185,15 @@ class VideoControlsBar extends StatelessWidget
       ),
     );
   }
+}
+
+String convertMsToTimecode(int ms)
+{
+  String result;
+  
+  Duration dur = Duration(milliseconds: ms);
+  result = dur.inMinutes.toString();
+  result += ":" + (dur.inSeconds.remainder(60)).toString().padLeft(2, '0');
+
+  return result;
 }
