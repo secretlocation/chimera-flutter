@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_parallax/flutter_parallax.dart';
 
 class LayeredImage extends StatefulWidget {
+  const LayeredImage(this.scrollPosition, this.images);
+  final double scrollPosition;
+  final List<AssetImage> images;
 
   @override
   State<StatefulWidget> createState() => LayeredImageState();
@@ -12,13 +14,16 @@ class LayeredImageState extends State<LayeredImage> {
   @override
   Widget build(BuildContext context) {
 
+    double imageWidth = MediaQuery.of(context).size.width;
+    double imageHeight = MediaQuery.of(context).size.height;
+
     return new Stack(
       children: <Widget>[
-        new Container( width: 750.0, height: 500.0, child: new Parallax.inside(child: new Image.asset('graphics/example_tile/example_layer5.png'), mainAxisExtent: 2500.0)),
-        new Container( width: 750.0, height: 500.0, child: new Parallax.inside(child: new Image.asset('graphics/example_tile/example_layer4.png'), mainAxisExtent: 2000.0)),
-        new Container( width: 750.0, height: 500.0, child: new Parallax.inside(child: new Image.asset('graphics/example_tile/example_layer3.png'), mainAxisExtent: 1500.0)),
-        new Container( width: 750.0, height: 500.0, child: new Parallax.inside(child: new Image.asset('graphics/example_tile/example_layer2.png'), mainAxisExtent: 1000.0)),
-        new Container( width: 750.0, height: 500.0, child: new Parallax.inside(child: new Image.asset('graphics/example_tile/example_layer1.png'), mainAxisExtent: 500.0)),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.20, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer5.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.5, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer4.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.5, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer3.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.25, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer2.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.1, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer1.png'))
       ],
     );
 
