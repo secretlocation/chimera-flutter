@@ -35,10 +35,6 @@ class _InfoBar extends State<InfoBar> {
           widget.title, widget.description));
     }
 
-    widgets.add(new Container(
-        constraints: BoxConstraints(maxHeight: 40.0),
-    ));
-
     widgets.add(
       Container(
         margin: EdgeInsets.all(10.0),
@@ -63,6 +59,7 @@ class _InfoBar extends State<InfoBar> {
 
     return
       Container(
+        constraints: BoxConstraints(minWidth: 100.0, maxWidth: width-40.0),
         decoration: new ShapeDecoration(
             shadows: [BoxShadow(spreadRadius: 1.0)],
             color: Colors.white,

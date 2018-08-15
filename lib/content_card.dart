@@ -48,7 +48,6 @@ class _ContentCard extends State<ContentCard>{
               ),
           ),
           new Positioned(
-            left: 20.0,
             right: 20.0,
             bottom: 20.0,
             child:
