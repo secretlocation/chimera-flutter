@@ -43,7 +43,7 @@ class _ContentCard extends State<ContentCard>{
             child:
               Opacity(
                 opacity: ((150.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
-                child:InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+                child:InfoBar(widget.data.runtime,widget.data.title, widget.data.description ),
               ),
           ),
 
@@ -62,11 +62,14 @@ class _ContentCard extends State<ContentCard>{
                 },
               child: new ConstrainedBox(
                 constraints: new BoxConstraints.expand(),
-                child: Stack(
-                  children: <Widget>[
-                    Image(image: widget.data.playButton, fit: BoxFit.contain, gaplessPlayback: true),
-                    Image(image: AssetImage("graphics/play.png"), fit: BoxFit.contain, gaplessPlayback: true),
-                  ],
+                child: Opacity(
+                  opacity: ((200.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
+                  child: Stack(
+                    children: <Widget>[
+                      Image(image: widget.data.playButton, fit: BoxFit.contain, gaplessPlayback: true),
+                      Image(image: AssetImage("graphics/play.png"), fit: BoxFit.contain, gaplessPlayback: true),
+                    ],
+                  ),
                 ),
               ),
             ),

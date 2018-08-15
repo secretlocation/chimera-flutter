@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/description_widget.dart';
+import 'video_view.dart';
 
 class InfoBar extends StatefulWidget {
   const InfoBar(this.time, this.title, this.description);
-  final String time;
+  final int time;
   final String title;
   final String description;
 
@@ -38,7 +39,7 @@ class _InfoBar extends State<InfoBar> {
       Container(
         margin: EdgeInsets.all(15.0),
         child: Text(
-            widget.time,
+            convertMsToTimecode(widget.time),
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black
