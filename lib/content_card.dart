@@ -45,10 +45,10 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           Positioned(
-            left: (width * 0.35),
-            top: (height * 0.5 - (width * 0.15)),
-            width: (width * 0.3),
-            height: (width * 0.3),
+            left: (width * 0.3),
+            top: (height * 0.5 - (width * 0.2)),
+            width: (width * 0.4),
+            height: (width * 0.4),
             child:
             FlatButton(
                 onPressed: () {
@@ -59,7 +59,7 @@ class _ContentCard extends State<ContentCard>{
                 },
               child: new ConstrainedBox(
                 constraints: new BoxConstraints.expand(),
-                child: new Image(image: widget.data.playButton, fit: BoxFit.cover, gaplessPlayback: true),
+                child: new Image(image: widget.data.playButton, fit: BoxFit.contain, gaplessPlayback: true),
               ),
             ),
           ),
