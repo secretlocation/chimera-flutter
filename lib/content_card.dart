@@ -1,6 +1,7 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/info_bar.dart';
+import 'package:chimera_flutter/layered_image.dart';
 import 'video_view.dart';
 
 class ContentCard extends StatefulWidget {
@@ -28,11 +29,11 @@ class _ContentCard extends State<ContentCard>{
         children: <Widget>[
 
           Positioned(
-              child:
-              Image(
-                    fit: BoxFit.cover,
-                    image: widget.data.thumbnail[0]
-                ),
+              child:LayeredImage(),
+//              Image(
+//                    fit: BoxFit.cover,
+//                    image: widget.data.thumbnail[0]
+//                ),
             height: height,
             width: width,
           ),
