@@ -38,7 +38,7 @@ class _InfoBar extends State<InfoBar> {
       Container(
         margin: EdgeInsets.all(15.0),
         child: Text(
-            "1:23",
+            widget.time,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black
