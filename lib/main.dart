@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/data.dart';
 import 'package:chimera_flutter/content_card.dart';
+import 'video_view.dart';
 
 void main() => runApp(new MyApp());
 

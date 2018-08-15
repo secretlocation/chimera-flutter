@@ -51,7 +51,12 @@ class _ContentCard extends State<ContentCard>{
             IconButton(
                 iconSize: 50.0,
                 icon: const Icon(Icons.play_circle_outline),
-                onPressed: () {}
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VideoView()),
+                  );
+                }
             ),
           ),
 
