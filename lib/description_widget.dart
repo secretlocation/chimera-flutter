@@ -14,11 +14,13 @@ class _DescriptionWidget extends State<DescriptionWidget> {
       new Container(
           padding: EdgeInsets.all(20.0),
           margin: EdgeInsets.only(bottom: 40.0),
+          constraints: BoxConstraints(minWidth: 50.0, minHeight: 50.0),
           child: Column(
             children: [
 
               Text(
                 widget.title,
+                overflow: TextOverflow.clip,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black
@@ -27,6 +29,7 @@ class _DescriptionWidget extends State<DescriptionWidget> {
 
               Text(
                 widget.description,
+                overflow: TextOverflow.clip,
                 style: TextStyle(
                     color: Colors.black
                 ),

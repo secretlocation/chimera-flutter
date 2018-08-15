@@ -23,13 +23,13 @@ class _ContentCard extends State<ContentCard>{
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return new Container(
-      child: new Stack(
+    return Container(
+      child: Stack(
         children: <Widget>[
 
-          new Positioned(
+          Positioned(
               child:
-                new Image(
+              Image(
                     fit: BoxFit.cover,
                     image: widget.data.thumbnail[0]
                 ),
@@ -37,21 +37,22 @@ class _ContentCard extends State<ContentCard>{
             width: width,
           ),
 
-          new Positioned(
-            left: (width * 0.5 - 25),
-            top: (height * 0.5 - 25),
-            child:
-              new IconButton(
-                  iconSize: 50.0,
-                  icon: const Icon(Icons.play_circle_outline),
-                  onPressed: () {}
-              ),
-          ),
-          new Positioned(
+          Positioned(
             right: 20.0,
             bottom: 20.0,
             child:
               new InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+          ),
+
+          Positioned(
+            left: (width * 0.5 - 25),
+            top: (height * 0.5 - 25),
+            child:
+            IconButton(
+                iconSize: 50.0,
+                icon: const Icon(Icons.play_circle_outline),
+                onPressed: () {}
+            ),
           ),
 
         ],
