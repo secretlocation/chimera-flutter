@@ -1,6 +1,6 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
-import 'package:chimera_flutter/description_widget.dart';
+import 'package:chimera_flutter/info_bar.dart';
 import 'video_view.dart';
 
 class ContentCard extends StatefulWidget {
@@ -13,7 +13,6 @@ class ContentCard extends StatefulWidget {
 class _ContentCard extends State<ContentCard>{
 
   bool shouldBeShown = false;
-  double opactiyForBox = 0.0;
 
   void showDescription(){
     shouldBeShown = !shouldBeShown;
@@ -24,26 +23,13 @@ class _ContentCard extends State<ContentCard>{
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    var infoTextElement = shouldBeShown ?
-      new Positioned(
-        left: (width * 0.2),
-        top: (width * 0.55),
-        child:
-        new Opacity(
-          opacity: 1.0,
-          child:
-          new DescriptionWidget(widget.data),
-        ),
-      )
-      : null;
-
-    return new Container(
-      child: new Stack(
+    return Container(
+      child: Stack(
         children: <Widget>[
 
-          new Positioned(
+          Positioned(
               child:
-                new Image(
+              Image(
                     fit: BoxFit.cover,
                     image: widget.data.thumbnail[0]
                 ),
@@ -51,44 +37,32 @@ class _ContentCard extends State<ContentCard>{
             width: width,
           ),
 
-          new Positioned(
+          Positioned(
+            bottom: 0.0,
+            right: 0.0,
+            child:
+              InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+          ),
+
+          Positioned(
             left: (width * 0.5 - 25),
             top: (height * 0.5 - 25),
             child:
-              new IconButton(
-                  iconSize: 50.0,
-                  icon: const Icon(Icons.play_circle_outline),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => VideoView()),
-                    );
-                  }
-              ),
-          ),
-
-          infoTextElement,
-
-          new Positioned(
-            left: (width * 0.825),
-            top: (height * 0.3),
-            child: new Column(
-              children: <Widget>[
-                new Text(
-                 widget.data.runtime.toString()
-                ),
-                new IconButton(
-                    iconSize: 50.0,
-                    icon: const Icon(Icons.info),
-                    onPressed: () {showDescription();}
-                ),
-              ],
+            IconButton(
+                iconSize: 50.0,
+                icon: const Icon(Icons.play_circle_outline),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VideoView()),
+                  );
+                }
             ),
           ),
 
-        ].where((child) => child != null).toList(),
+        ],
       ),
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.bottomLeft,
       height: height,
       width: width,
     );

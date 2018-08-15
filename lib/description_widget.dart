@@ -1,36 +1,45 @@
-import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionWidget extends StatefulWidget {
-  const DescriptionWidget(this.data);
-  final VideoContent data;
+  const DescriptionWidget(this.title, this.description);
+  final String title;
+  final String description;
 
   _DescriptionWidget createState() => new _DescriptionWidget();
 }
 
 class _DescriptionWidget extends State<DescriptionWidget> {
-
   Widget build(BuildContext context) {
     return
-        new Stack(
-          children: <Widget>[
-            new Positioned(
-              child: new Image(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: MediaQuery.of(context).size.width * 0.6,
-                      fit: BoxFit.cover,
-                      image: new AssetImage('graphics/background-popup.png')
-              ),
-            ),
-              new Positioned(
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: MediaQuery.of(context).size.width * 0.65,
-                top: 35.0,
-                child:
-                  new Text(widget.data.description),
-              ),
-          ],
-      );
+      new Container(
+          padding: EdgeInsets.all(20.0),
+          margin: EdgeInsets.only(bottom: 40.0),
+          alignment: Alignment.topLeft,
+          child: Column(
+            children: [
 
+              Text(
+                widget.title,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black
+                ),
+              ),
+
+              Text(
+                widget.description,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black
+                ),
+              )
+
+            ],
+          )
+      );
   }
 }
