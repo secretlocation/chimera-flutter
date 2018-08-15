@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chimera_flutter/info_bar.dart';
 import 'package:chimera_flutter/layered_image.dart';
 import 'video_view.dart';
+import 'custom_material_page_route.dart';
 
 class ContentCard extends StatefulWidget {
   const ContentCard(this.data, this.scrollPosition, this.sensorFusion);
@@ -41,7 +42,10 @@ class _ContentCard extends State<ContentCard>{
             bottom: 0.0,
             right: 0.0,
             child:
-              InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+              Opacity(
+                opacity: ((150.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
+                child:InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+              ),
           ),
 
           Positioned(
@@ -54,7 +58,7 @@ class _ContentCard extends State<ContentCard>{
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => VideoView(currentVideo:widget.data)),
+                    FadeRoute(builder: (context) => VideoView(currentVideo:widget.data)),
                   );
                 },
               child: new ConstrainedBox(
