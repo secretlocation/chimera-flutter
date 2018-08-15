@@ -78,7 +78,7 @@ class _VideoViewState extends State<VideoView> {
 
     childs.add(VideoPlayer(_controller));
     if(!_isLoaded) childs.add(LoadingSpinner());
-    childs.add(VideoControlsBar(_controller));
+    childs.add(VideoControlsBottomBar(_controller));
 
     return new Stack(
       children: childs,
@@ -140,20 +140,82 @@ class _VideoViewState extends State<VideoView> {
 */
 
 
-class VideoControlsBar extends StatelessWidget
+class VideoControlsBottomBar extends StatelessWidget
 {
 
   VideoPlayerController controller;
 
-  VideoControlsBar(this.controller);
+  VideoControlsBottomBar(this.controller);
 
   @override
   Widget build(BuildContext context) {
 
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    var widgets = <Widget>[];
+
+    widgets.add(
+      Align(
+        alignment: Alignment.topCenter,
+        child:
+          new SizedBox(
+            width: width,
+            height: 15.0,
+            child: new VideoProgressIndicator(
+              controller,
+              allowScrubbing: true,
+              padding: EdgeInsets.all(0.0),
+            ),
+          ),
+        ),
+      );
+
+
+    widgets.add(
+      Container(
+        margin: EdgeInsets.all(15.0),
+        child: Text(
+            "1:23",
+            style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+        ))
+    );
 
     return new Align(
       alignment: Alignment.bottomCenter,
-      child: new Container(
+      child:
+        AnimatedContainer(
+          duration: Duration(milliseconds: 250),
+          curve: Curves.fastOutSlowIn,
+          margin: EdgeInsets.all(20.0),
+          constraints: BoxConstraints(
+              minWidth: width - 40.0,
+              maxWidth: width - 40.0,
+              minHeight: 50.0,
+              maxHeight: 50.0,
+          ),
+          decoration: new ShapeDecoration(
+              shadows: [BoxShadow(spreadRadius: 0.2, blurRadius: 5.0)],
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))
+              )
+          ),
+          child: Stack(
+              alignment: Alignment.bottomLeft,
+              children: widgets
+          )
+        ),
+      );
+
+
+
+
+      /* new Container(
         constraints: BoxConstraints(minWidth: 100.0, maxWidth: 800-40.0),
         decoration: new ShapeDecoration(
             shadows: [BoxShadow(spreadRadius: 1.0)],
@@ -189,7 +251,7 @@ class VideoControlsBar extends StatelessWidget
           ],
         ),
       ),
-    );
+    );*/
   }
 }
 

@@ -1,11 +1,13 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/info_bar.dart';
+import 'package:chimera_flutter/layered_image.dart';
 import 'video_view.dart';
 
 class ContentCard extends StatefulWidget {
-  const ContentCard(this.data);
+  const ContentCard(this.data, this.scrollPosition);
   final VideoContent data;
+  final double scrollPosition;
 
   _ContentCard createState() => new _ContentCard();
 }
@@ -24,15 +26,12 @@ class _ContentCard extends State<ContentCard>{
     double height = MediaQuery.of(context).size.height;
 
     return Container(
-      child: Stack(
+      child: ClipRect(
+        child: Stack(
         children: <Widget>[
 
           Positioned(
-              child:
-              Image(
-                    fit: BoxFit.cover,
-                    image: widget.data.thumbnail[0]
-                ),
+            child: LayeredImage(widget.scrollPosition, widget.data.thumbnail),
             height: height,
             width: width,
           ),
@@ -65,6 +64,7 @@ class _ContentCard extends State<ContentCard>{
           ),
 
         ],
+      ),
       ),
       alignment: Alignment.bottomLeft,
       height: height,
