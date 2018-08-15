@@ -5,8 +5,9 @@ import 'package:chimera_flutter/layered_image.dart';
 import 'video_view.dart';
 
 class ContentCard extends StatefulWidget {
-  const ContentCard(this.data);
+  const ContentCard(this.data, this.scrollPosition);
   final VideoContent data;
+  final double scrollPosition;
 
   _ContentCard createState() => new _ContentCard();
 }
@@ -29,11 +30,12 @@ class _ContentCard extends State<ContentCard>{
         children: <Widget>[
 
           Positioned(
-              child:LayeredImage(),
-//              Image(
-//                    fit: BoxFit.cover,
-//                    image: widget.data.thumbnail[0]
-//                ),
+              child:
+//              LayeredImage(),
+              Image(
+                    fit: BoxFit.cover,
+                    image: widget.data.thumbnail[0]
+                ),
             height: height,
             width: width,
           ),
@@ -42,7 +44,7 @@ class _ContentCard extends State<ContentCard>{
             bottom: 0.0,
             right: 0.0,
             child:
-              InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+              InfoBar(widget.scrollPosition.toString(),widget.data.title, widget.data.description ),
           ),
 
           Positioned(

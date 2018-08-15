@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   PageController(viewportFraction: 1.0);
 
   ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
+  ValueNotifier<double> pageScrollPosition = ValueNotifier<double>(0.0);
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       body:           NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
+          pageScrollPosition.value = notification.metrics.pixels;
           if (notification.depth == 0 && notification is ScrollUpdateNotification) {
             pageCurrent.value = _pageController.page;
             setState(() {});
@@ -82,8 +84,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Iterable<Widget> _buildPages() {
 
     // Create tiles
+    double height = MediaQuery.of(context).size.height;
     final List<Widget> tiles = [];
-    data.forEach((element) => tiles.add(new ContentCard(element)));
+    for (int i = 0; i < data.length; i++) {
+      var element = data[i];
+      tiles.add(new ContentCard(element, pageScrollPosition.value - (i * height)));
+    }
 
     final List<Widget> pages = <Widget>[];
 
@@ -100,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: FractionalOffset.center,
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.001)
-                  ..rotateX(rotateFactor)
-                  ..scale(1.0 + scaleAmount - scaleFactor.abs(), 1.0 + scaleAmount - scaleFactor.abs())
+//                  ..rotateX(rotateFactor)
+//                  ..scale(1.0 + scaleAmount - scaleFactor.abs(), 1.0 + scaleAmount - scaleFactor.abs())
                 ,
                 child: tiles[index],
               )
