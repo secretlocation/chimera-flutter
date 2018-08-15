@@ -41,7 +41,10 @@ class _ContentCard extends State<ContentCard>{
             bottom: 0.0,
             right: 0.0,
             child:
-              InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+              Opacity(
+                opacity: ((150.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
+                child:InfoBar(widget.data.runtime.toString(),widget.data.title, widget.data.description ),
+              ),
           ),
 
           Positioned(
