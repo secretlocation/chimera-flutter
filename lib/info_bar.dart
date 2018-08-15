@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/description_widget.dart';
-import 'video_view.dart';
+import 'ms_to_timecode.dart';
 
 class InfoBar extends StatefulWidget {
   const InfoBar(this.time, this.title, this.description);
