@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for (int index = 0; index < tiles.length; index++) {
       double position = (pageCurrent.value - index);
-      var rotateFactor = ((position * 1.0));
+      var rotateFactor = ((position * 0.75));
       var scaleAmount = 0.5;
       var scaleFactor = (1.0 - position.abs()) * scaleAmount;
 
