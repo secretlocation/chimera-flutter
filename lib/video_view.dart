@@ -15,6 +15,7 @@ class _VideoViewState extends State<VideoView> {
   VideoPlayerController _controller;
   bool _isLoaded = false;
   bool _isPlaying = false;
+  bool _controlsVisible = true;
   VoidCallback playingListener;
 
   // Initialize the playing listener
@@ -31,6 +32,7 @@ class _VideoViewState extends State<VideoView> {
 
   void playAfterInit(_){
     _isLoaded = true;
+    _controlsVisible = false;
     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
     setState(() {});
     _controller.play();
@@ -75,70 +77,54 @@ class _VideoViewState extends State<VideoView> {
   @override
   Widget build(BuildContext context) {
     var childs = <Widget>[];
+    childs.add(GestureDetector(
+        onTap: () {
+          setState(() {
+            _controlsVisible = !_controlsVisible;
+          });
+        },
+        child: VideoPlayer(_controller),
+    ));
+    childs.add(
+        AnimatedOpacity(
+          opacity: _controlsVisible ? 1.0: 0.0,
+          duration: Duration(milliseconds: 200),
+          child: VideoControls(controller: _controller, content: widget.currentVideo, isLoaded: _isLoaded,),
+        ));
 
-    childs.add(VideoPlayer(_controller));
-    if(!_isLoaded) childs.add(LoadingSpinner(widget.currentVideo.customColor));
-    childs.add(VideoControlsBottomBar(_controller, widget.currentVideo));
+    return Stack(
+      children: childs,
+    );
+  }
+}
+
+class VideoControls extends StatefulWidget
+{
+  VideoPlayerController controller;
+  VideoContent content;
+  bool isLoaded = false;
+  VideoControls({Key key, @required this.controller, this.content, this.isLoaded}) : super(key: key);
+  @override
+  _VideoControlsState createState() => _VideoControlsState();
+}
+class _VideoControlsState extends State<VideoControls>
+{
+
+  @override
+  Widget build(BuildContext context) {
+    var childs = <Widget>[];
+
+    if(!widget.isLoaded) childs.add(LoadingSpinner(widget.content.customColor));
+    else {
+
+    }
+    childs.add(VideoControlsBottomBar(widget.controller, widget.content));
 
     return new Stack(
       children: childs,
     );
   }
 }
-
-/*
-class _VideoViewState extends State<VideoView> {
-  VideoPlayerController _controller;
-  bool _isPlaying = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.network(
-      // Example content sourced from https://github.com/SamsungInternet/examples
-      'https://github.com/SamsungInternet/examples/blob/master/360-video/paris-by-diego.mp4?raw=true',
-    )
-      ..addListener(() {
-        final bool isPlaying = _controller.value.isPlaying;
-        if (isPlaying != _isPlaying) {
-          setState(() {
-            _isPlaying = isPlaying;
-          });
-        }
-      })
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Video Demo',
-      home: Scaffold(
-        body: Center(
-          child: _controller.value.initialized
-              ? AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          )
-              : Container(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _controller.value.isPlaying
-              ? _controller.pause
-              : _controller.play,
-          child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/
-
 
 class VideoControlsBottomBar extends StatelessWidget
 {
