@@ -1,6 +1,16 @@
 import 'video_content.dart';
 
 final List<VideoContent> data = <VideoContent>[
+  VideoContent("Blaster of the Universe Trailer",
+      "Blasters of the Universe is the first of its kind, bringing the bullet hell genre into first person VR. Intense gameplay is heavily reliant on physical movement, requiring the player to duck, dodge, twist, turn, and maneuver their way through tons of enemies and hundreds of bullets.",
+      ["graphics/blasters@2x.png", "graphics/blasters@2x.png"],
+      60,
+      "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4"),
+  VideoContent("Meditation of Nature",
+      "Meditate in nature, the most relaxing place to meditate. Peacefully clear your mind for meditation through meditation.",
+      ["graphics/meditation@2x.png", "graphics/meditation@2x.png"],
+      60,
+      "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4"),
   VideoContent("Big Buck Bunny",
       "A large and lovable rabbit deals with three tiny bullies, led by a flying squirrel, who are determined to squelch his happiness.",
       ["graphics/panda.png", "graphics/panda.png"],
