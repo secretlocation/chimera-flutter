@@ -201,8 +201,7 @@ class LoadingSpinner extends StatelessWidget
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    double spinnerWidth = width * 0.2;
-    double spinnerHeight = width * 0.2;
+    double spinnerWidth, spinnerHeight = width * 0.2;
 
     return new Positioned(
       left: (width - spinnerWidth) * 0.5,
