@@ -63,7 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return new Scaffold(
-      body:           NotificationListener<ScrollNotification>(
+      backgroundColor: Colors.black,
+      body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           pageScrollPosition.value = notification.metrics.pixels;
           if (notification.depth == 0 && notification is ScrollUpdateNotification) {
@@ -106,8 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: FractionalOffset.center,
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.001)
-//                  ..rotateX(rotateFactor)
-//                  ..scale(1.0 + scaleAmount - scaleFactor.abs(), 1.0 + scaleAmount - scaleFactor.abs())
+                  ..rotateX(rotateFactor)
+                  ..scale(1.0 + scaleAmount - scaleFactor.abs(), 1.0 + scaleAmount - scaleFactor.abs())
                 ,
                 child: tiles[index],
               )

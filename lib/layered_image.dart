@@ -19,11 +19,11 @@ class LayeredImageState extends State<LayeredImage> {
 
     return new Stack(
       children: <Widget>[
-        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.20, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer5.png')),
-        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.5, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer4.png')),
-        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.5, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer3.png')),
-        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.25, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer2.png')),
-        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * - 0.1, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer1.png'))
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * 0.20, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer5.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * 0.5, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer4.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * 0.5, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer3.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * 0.25, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer2.png')),
+        new Container( transform: Matrix4.translationValues(0.0, widget.scrollPosition * 0.1, 0.0), width: imageWidth, height: imageHeight, child: new Image.asset('graphics/example_tile/example_layer1.png'))
       ],
     );
 
