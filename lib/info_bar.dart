@@ -12,16 +12,11 @@ class InfoBar extends StatefulWidget {
 
 class _InfoBar extends State<InfoBar> {
 
-  Icon buttonIcon =  Icon(Icons.arrow_drop_up);
+  Icon buttonIconUp =  Icon(Icons.arrow_drop_up);
+  Icon buttonIconDown =  Icon(Icons.arrow_drop_down);
   bool isExpanded = false;
 
   void toggleInfoVisiblity(){
-    if(isExpanded){
-      buttonIcon = Icon(Icons.arrow_drop_down);
-    }
-    else{
-      buttonIcon = Icon(Icons.arrow_drop_up);
-    }
     isExpanded = ! isExpanded;
     setState(() { });
   }
@@ -32,30 +27,29 @@ class _InfoBar extends State<InfoBar> {
     var widgets = <Widget>[];
 
 
-    widgets.add(Container(
-        constraints: BoxConstraints(minWidth: 500.0, minHeight: 500.0),
-        child: DescriptionWidget(widget.title, widget.description)
-
-    ));
+    widgets.add(DescriptionWidget(widget.title, widget.description));
 
     widgets.add(
       Container(
-        margin: EdgeInsets.all(10.0),
+        margin: EdgeInsets.all(15.0),
         child: Text(
             "1:23",
-            style: TextStyle(color: Colors.black)
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
         ))
     );
 
     widgets.add(
       new Positioned(
-        bottom: -10.0,
+        bottom: -7.0,
         right: 0.0,
         child:
         new IconButton(
           alignment: Alignment.bottomRight,
             iconSize: 50.0,
-            icon: buttonIcon,
+            icon: (isExpanded)? buttonIconDown : buttonIconUp,
             onPressed: () {toggleInfoVisiblity();}
         ),
       ),
@@ -65,13 +59,14 @@ class _InfoBar extends State<InfoBar> {
       AnimatedContainer(
         duration: Duration(milliseconds: 250),
         curve: Curves.linear,
+        margin: EdgeInsets.all(20.0),
         constraints: BoxConstraints(
             minWidth: 100.0,
-            maxWidth: (isExpanded)? width - 40.0 : 100.0,
-            maxHeight: (isExpanded)? (height / 2) - 30.0 : 40.0
+            maxWidth: (isExpanded)? width - 40.0 : 110.0,
+            maxHeight: (isExpanded)? (height / 2) - 30.0 : 50.0
         ),
         decoration: new ShapeDecoration(
-            shadows: [BoxShadow(spreadRadius: 1.0)],
+            shadows: [BoxShadow(spreadRadius: 0.2, blurRadius: 5.0)],
             color: Colors.white,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))
