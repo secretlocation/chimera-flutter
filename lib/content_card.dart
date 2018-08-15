@@ -26,7 +26,8 @@ class _ContentCard extends State<ContentCard>{
     double height = MediaQuery.of(context).size.height;
 
     return Container(
-      child: Stack(
+      child: ClipRect(
+        child: Stack(
         children: <Widget>[
 
           Positioned(
@@ -63,6 +64,7 @@ class _ContentCard extends State<ContentCard>{
           ),
 
         ],
+      ),
       ),
       alignment: Alignment.bottomLeft,
       height: height,
