@@ -74,7 +74,7 @@ class _VideoViewState extends State<VideoView> {
     return new Stack(
       children: <Widget>[
         new VideoPlayer(_controller),
-        new VideoControlsBar(),
+        new VideoControlsBar(_controller),
       ],
     );
   }
@@ -137,26 +137,50 @@ class _VideoViewState extends State<VideoView> {
 class VideoControlsBar extends StatelessWidget
 {
 
+  VideoPlayerController controller;
+
+  VideoControlsBar(this.controller);
+
   @override
   Widget build(BuildContext context) {
-    return new ButtonBar(
-
-      children: <Widget>[
-        new RaisedButton(
-          child: new Text('Play'),
-          onPressed: null,
+    return new Align(
+      alignment: Alignment.bottomCenter,
+      child: new Container(
+        constraints: BoxConstraints(minWidth: 100.0, maxWidth: 800-40.0),
+        decoration: new ShapeDecoration(
+            shadows: [BoxShadow(spreadRadius: 1.0)],
+            color: Colors.white,
+            shape: Border.all(),
         ),
-        new SizedBox(
-          width: 160.0,
-          child: new LinearProgressIndicator(
-            value: 0.5,
-          ),
+        child: new ButtonBar(
+          children: <Widget>[
+            new SizedBox(
+              width: 40.0,
+              child: new RaisedButton(
+                child: new Text("<"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            new RaisedButton(
+              child: new Text('Play'),
+              onPressed: (){},
+            ),
+            new SizedBox(
+              width: 100.0,
+              child: new VideoProgressIndicator(
+                controller,
+                allowScrubbing: true,
+              ),
+            ),
+            new RaisedButton(
+              child: new Text('Info'),
+              onPressed: (){},
+            ),
+          ],
         ),
-        new RaisedButton(
-          child: new Text('Info'),
-          onPressed: null,
-        ),
-      ],
+      ),
     );
   }
 }
