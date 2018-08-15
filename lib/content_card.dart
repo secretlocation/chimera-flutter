@@ -1,7 +1,7 @@
 import 'package:chimera_flutter/video_content.dart';
 import 'package:flutter/material.dart';
-import 'package:chimera_flutter/description_widget.dart';
 import 'package:chimera_flutter/info_bar.dart';
+import 'video_view.dart';
 
 class ContentCard extends StatefulWidget {
   const ContentCard(this.data);
