@@ -13,8 +13,8 @@ class InfoBar extends StatefulWidget {
 
 class _InfoBar extends State<InfoBar> {
 
-  Icon buttonIconUp =  Icon(Icons.arrow_drop_up);
-  Icon buttonIconDown =  Icon(Icons.arrow_drop_down);
+  Icon buttonIconUp =  Icon(Icons.keyboard_arrow_up);
+  Icon buttonIconDown =  Icon(Icons.keyboard_arrow_down);
   bool isExpanded = false;
 
   void toggleInfoVisibility(){
@@ -50,13 +50,13 @@ class _InfoBar extends State<InfoBar> {
 
     widgets.add(
       new Positioned(
-        bottom: -7.0,
+        bottom: 0.0,
         right: 0.0,
         child:
         new IconButton(
           color: Color(0xFF686868),
           alignment: Alignment.bottomRight,
-            iconSize: 50.0,
+            iconSize: 30.0,
             icon: (isExpanded)? buttonIconDown : buttonIconUp,
             onPressed: () {toggleInfoVisibility();}
         ),

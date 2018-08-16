@@ -187,7 +187,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     );
     rowChildren.add(
       FlatButton(
-        child: Icon(Icons.arrow_drop_up, color: Color(0xFF686868)),
+        child: Icon(Icons.keyboard_arrow_up, color: Color(0xFF686868)),
         onPressed: () {
 
         },
