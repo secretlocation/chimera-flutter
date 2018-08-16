@@ -26,21 +26,8 @@ final List<VideoContent> data = <VideoContent>[
 
   VideoContent("Meditation in Nature",
       "Meditate in nature, the most relaxing place to meditate. Peacefully clear your mind for meditation through meditation.",
-      ["graphics/example_tile/example_layer5.png", "graphics/example_tile/example_layer4.png", "graphics/meditation@2x.png"],
+      ["graphics/tile_meditation/med_layer5.png", "graphics/tile_meditation/med_layer4.png", "graphics/tile_meditation/med_layer3.png", "graphics/tile_meditation/med_layer2.png", "graphics/tile_meditation/med_layer1.png"],
       242000,
       "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4",
-      "graphics/playblue.png"),
-
-  VideoContent("Big Buck Bunny",
-      "A large and lovable rabbit deals with three tiny bullies, led by a flying squirrel, who are determined to squelch his happiness.",
-      ["graphics/example_tile/example_layer5.png", "graphics/example_tile/example_layer4.png", "graphics/panda.png"],
-      6000,
-      "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4",
-      "graphics/panda.png"),
-  VideoContent("Octopus Carpenter: the Movie",
-      "To find the octopus carpenter is to discover underwater treasure. The animation has the depth of the ocean itself. The adventure is both fun and fulfilling. And the lessons just keep on swimming.",
-      ["graphics/example_tile/example_layer5.png", "graphics/example_tile/example_layer4.png", "graphics/chimera.png"],
-      600000,
-      "http://yt-dash-mse-test.commondatastorage.googleapis.com/media/motion-20120802-87.mp4",
       "graphics/playblue.png"),
 ];
