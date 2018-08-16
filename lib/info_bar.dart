@@ -54,7 +54,7 @@ class _InfoBar extends State<InfoBar> {
         right: 0.0,
         child:
         new IconButton(
-          color: Colors.grey,
+          color: Color(0xFF686868),
           alignment: Alignment.bottomRight,
             iconSize: 50.0,
             icon: (isExpanded)? buttonIconDown : buttonIconUp,
