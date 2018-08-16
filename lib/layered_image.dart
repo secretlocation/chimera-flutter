@@ -12,7 +12,7 @@ class LayeredImage extends StatefulWidget {
 }
 
 class LayeredImageState extends State<LayeredImage> {
-  final List<double> modifiers = [0.9,0.8,0.7,0.6,0.1];
+  final List<double> modifiers = [1.0,0.8,0.7,0.5,0.1];
   List<double> modifiersSensor;
 
   List<double> _gyroscopeValues = [0.0, 0.0, 0.0];

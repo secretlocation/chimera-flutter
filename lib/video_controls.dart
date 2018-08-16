@@ -50,6 +50,17 @@ class _VideoControlsState extends State<VideoControls>
     var childs = <Widget>[];
 
     if(widget.isInteractable) {
+      childs.add (
+        Positioned(
+          top: 10.0,
+          width: width * 0.22,
+          child:
+          Align(
+            alignment: Alignment.topLeft,
+            child: CardboardButton(),
+          ),
+        ),
+      );
       childs.add(
           Positioned(
             left: (width * 0.35),
@@ -70,8 +81,8 @@ class _VideoControlsState extends State<VideoControls>
             ),
           )
       );
+      childs.add(VideoControlsBottomBar(controller: widget.controller, content: widget.content));
     }
-    childs.add(VideoControlsBottomBar(controller: widget.controller, content: widget.content));
 
     return new Stack(
       children: childs,
@@ -99,6 +110,19 @@ class PlayPauseButton extends StatelessWidget
         Image(image: backgroundImage, fit: BoxFit.contain, gaplessPlayback: true),
         Image(image: AssetImage( isPause ? "graphics/pause.png" : "graphics/play.png"), fit: BoxFit.contain, gaplessPlayback: true),
       ],
+    );
+  }
+}
+
+class CardboardButton extends StatelessWidget
+{
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed: (){},
+      child: Image(
+        image: AssetImage("graphics/cardboard.png"),
+      ),
     );
   }
 }
@@ -187,7 +211,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     );
     rowChildren.add(
       FlatButton(
-        child: Icon(Icons.arrow_drop_up, color: Color(0xFF686868)),
+        child: Icon(Icons.keyboard_arrow_up, color: Color(0xFF686868)),
         onPressed: () {
 
         },
