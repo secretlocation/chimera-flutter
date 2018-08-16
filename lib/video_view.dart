@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'video_content.dart';
 import 'video_controls.dart';
-import 'ms_to_timecode.dart';
 
 class VideoView extends StatefulWidget
 {

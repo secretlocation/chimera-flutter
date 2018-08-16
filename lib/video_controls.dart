@@ -71,7 +71,7 @@ class _VideoControlsState extends State<VideoControls>
           )
       );
     }
-    childs.add(VideoControlsBottomBar(widget.controller, widget.content));
+    childs.add(VideoControlsBottomBar(controller: widget.controller, content: widget.content));
 
     return new Stack(
       children: childs,
@@ -103,13 +103,38 @@ class PlayPauseButton extends StatelessWidget
   }
 }
 
-class VideoControlsBottomBar extends StatelessWidget
+class VideoControlsBottomBar extends StatefulWidget
 {
 
   VideoPlayerController controller;
   VideoContent content;
 
-  VideoControlsBottomBar(this.controller, this.content);
+  VideoControlsBottomBar({@required this.controller, @required this.content});
+
+  @override
+  _VideoControlsBottomBarState createState() => _VideoControlsBottomBarState();
+
+
+}
+
+class _VideoControlsBottomBarState extends State<VideoControlsBottomBar>
+{
+  int positionMs = 0;
+
+  void progressUpdate(Duration newProgress)
+  {
+    setState(() {
+    positionMs = newProgress.inMilliseconds;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.position.then((value){
+      progressUpdate(value);
+    }).catchError((_){});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,9 +152,9 @@ class VideoControlsBottomBar extends StatelessWidget
           width: width,
           height: 15.0,
           child: new VideoProgressIndicator(
-            controller,
+            widget.controller,
             colors: VideoProgressColors(
-              playedColor: content.customColor,
+              playedColor: widget.content.customColor,
               backgroundColor: Color(0xFFF1EFF1),
             ),
             allowScrubbing: true,
@@ -139,24 +164,22 @@ class VideoControlsBottomBar extends StatelessWidget
       ),
     );
 
-
     widgets.add(
         Container(
             margin: EdgeInsets.all(15.0),
             child: Text(
-                "1:23",
+                convertMsToTimecode(widget.controller.value.duration.inMilliseconds - positionMs),
                 style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                )
-            ))
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+        ))
     );
 
     return new Align(
       alignment: Alignment.bottomCenter,
-      child:
-      AnimatedContainer(
+      child: AnimatedContainer(
         duration: Duration(milliseconds: 250),
         curve: Curves.fastOutSlowIn,
         margin: EdgeInsets.all(20.0),
@@ -167,20 +190,26 @@ class VideoControlsBottomBar extends StatelessWidget
           maxHeight: 50.0,
         ),
         decoration: new ShapeDecoration(
-            shadows: [BoxShadow(spreadRadius: 0.2, blurRadius: 5.0)],
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))
-            )
+          shadows: [BoxShadow(spreadRadius: 0.2, blurRadius: 5.0)],
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))
+          )
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           child: Stack(
-              alignment: Alignment.bottomLeft,
-              children: widgets
+            alignment: Alignment.bottomLeft,
+            children: widgets
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
   }
 }
