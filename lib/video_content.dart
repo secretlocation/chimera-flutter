@@ -19,7 +19,10 @@ class VideoContent
     parallaxLayers.forEach((layerString) =>
       this.thumbnail.add( AssetImage(layerString) )
     );
-    this.playButton = AssetImage(newPlayButton);
+
+    if (newPlayButton != null) {
+      this.playButton = AssetImage(newPlayButton);
+    }
 
     this.customColor = Color(newColor);
   }

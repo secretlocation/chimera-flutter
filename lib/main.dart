@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/data.dart';
 import 'package:chimera_flutter/content_card.dart';
+import 'dart:async';
+import 'package:async/async.dart';
 
 void main() => runApp(new MyApp());
 
@@ -51,6 +53,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
   ValueNotifier<double> pageScrollPosition = ValueNotifier<double>(0.0);
+  Timer delayScroll;
+
+  @override void initState() {
+    super.initState();
+
+    delayScroll = Timer(Duration(seconds: 3), () {
+      _pageController.animateToPage(1, duration: Duration(seconds: 1), curve: Curves.easeIn);
+      delayScroll = null;
+    });
+  }
+
+  @override void dispose() {
+    super.dispose();
+
+    if (delayScroll != null) delayScroll.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
