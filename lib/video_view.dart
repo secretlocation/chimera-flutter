@@ -7,6 +7,7 @@ class VideoView extends StatefulWidget
 {
   VideoContent currentVideo;
   VideoView({Key key, @required this.currentVideo}) : super(key: key);
+
   @override
   _VideoViewState createState() => _VideoViewState();
 }
@@ -55,7 +56,8 @@ class _VideoViewState extends State<VideoView> {
   void deactivate() {
     super.deactivate();
     _controller
-      ..setVolume(0.0);
+      ..setVolume(0.0)
+      ..dispose();
   }
 
   @override

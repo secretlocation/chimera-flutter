@@ -52,10 +52,10 @@ class _VideoControlsState extends State<VideoControls>
     if(widget.isInteractable) {
       childs.add(
           Positioned(
-            left: (width * 0.3),
-            top: (height * 0.5 - (width * 0.2)),
-            width: (width * 0.4),
-            height: (width * 0.4),
+            left: (width * 0.35),
+            top: (height * 0.5 - (width * 0.15)),
+            width: (width * 0.3),
+            height: (width * 0.3),
             child: GestureDetector(
               onTap: () {
                 if (_isPlaying) {
@@ -143,10 +143,60 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    final int pos = widget.controller.value.position.inMilliseconds;
-    final int dur = widget.controller.value.duration.inMilliseconds;
+    int pos;
+    int dur;
+
+    try{
+      pos = widget.controller.value.position.inMilliseconds;
+      dur = widget.controller.value.duration.inMilliseconds;
+    }
+    catch(e)
+    {
+
+    }
 
     var widgets = <Widget>[];
+
+    var rowChildren = <Widget>[];
+    rowChildren.add(
+      FlatButton(
+        child: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+    rowChildren.add(
+      Expanded(
+        child:  Container(
+          margin: EdgeInsets.all(15.0),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+                convertMsToTimecode(dur-pos),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                )
+            )
+          )
+
+        ),
+      ),
+    );
+    rowChildren.add(
+      FlatButton(
+        child: Icon(Icons.arrow_drop_up),
+        onPressed: () {
+
+        },
+      ),
+    );
+
+    widgets.add(Row(
+      children: rowChildren,
+    ));
 
     widgets.add(
       Align(
@@ -168,19 +218,6 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
       ),
     );
 
-    widgets.add(
-        Container(
-            margin: EdgeInsets.all(15.0),
-            child: Text(
-                convertMsToTimecode(dur-pos),
-                style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black
-            )
-        ))
-    );
-
     return new Align(
       alignment: Alignment.bottomCenter,
       child: AnimatedContainer(
@@ -190,8 +227,8 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
         constraints: BoxConstraints(
           minWidth: width - 40.0,
           maxWidth: width - 40.0,
-          minHeight: 50.0,
-          maxHeight: 50.0,
+          minHeight: 60.0,
+          maxHeight: 60.0,
         ),
         decoration: new ShapeDecoration(
           shadows: [BoxShadow(spreadRadius: 0.2, blurRadius: 5.0)],
@@ -202,9 +239,8 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Stack(
-            alignment: Alignment.bottomLeft,
-            children: widgets
+          child: Column(
+              children: widgets,
           ),
         ),
       ),
