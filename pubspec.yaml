@@ -13,6 +13,7 @@ dependencies:
   video_player:
   sensors:
     path: ./plugins/sensors
+  async: ^2.0.7
 
 dev_dependencies:
   flutter_test:

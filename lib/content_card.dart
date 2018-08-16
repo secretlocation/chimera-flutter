@@ -45,11 +45,11 @@ class _ContentCard extends State<ContentCard>{
           Positioned(
             bottom: 0.0,
             right: 0.0,
-            child:
+            child: (widget.data.playButton != null) ?
               Opacity(
                 opacity: ((150.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
                 child:InfoBar(widget.data.runtime,widget.data.title, widget.data.description ),
-              ),
+              ) : Container(),
           ),
 
           Positioned(
@@ -64,7 +64,7 @@ class _ContentCard extends State<ContentCard>{
                     FadeRoute(builder: (context) => VideoView(currentVideo:widget.data)),
                   );
                 },
-              child: new ConstrainedBox(
+              child: (widget.data.playButton != null) ? new ConstrainedBox(
                 constraints: new BoxConstraints.expand(),
                 child: Opacity(
                   opacity: ((200.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
@@ -75,7 +75,7 @@ class _ContentCard extends State<ContentCard>{
                     ],
                   ),
                 ),
-              ),
+              ) : null,
             ),
           ),
 
