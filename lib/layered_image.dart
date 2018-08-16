@@ -76,6 +76,7 @@ class LayeredImageState extends State<LayeredImage> {
 
     double imageWidth = screenWidth;
     double imageHeight = screenHeight;
+    double scaleFactor = 1.2;
 
     double modifiersMultiplier = screenWidth/1080;
     modifiersSensor = [modifiersMultiplier*10.0, modifiersMultiplier*8.0, modifiersMultiplier*5.0, modifiersMultiplier*3.0, modifiersMultiplier*1.0];
@@ -84,7 +85,9 @@ class LayeredImageState extends State<LayeredImage> {
     
     for(int i = 0; i < widget.images.length; i++) {
       imageLayers.add(Container(
-          transform: Matrix4.translationValues(modifiersSensor[i] * _sensorFusion[0] * modifiers[i], (widget.scrollPosition + (modifiersSensor[i] * _sensorFusion[1])) * modifiers[i], 0.0),
+          transform: Matrix4
+              .translationValues(modifiersSensor[i] * _sensorFusion[0] * modifiers[i] + imageWidth*(1-scaleFactor)/2 , (widget.scrollPosition + (modifiersSensor[i] * _sensorFusion[1])) * modifiers[i] + imageHeight*(1-scaleFactor)/2, 0.0)
+              ..scale(scaleFactor),
           width: imageWidth,
           height: imageHeight,
           child: Image(image: widget.images[i]))
@@ -94,9 +97,5 @@ class LayeredImageState extends State<LayeredImage> {
     return Stack(
       children: imageLayers
     );
-
   }
-
-
-
 }
