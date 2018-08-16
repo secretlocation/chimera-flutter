@@ -143,8 +143,8 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    int pos;
-    int dur;
+    int pos = 0;
+    int dur = 0;
 
     try{
       pos = widget.controller.value.position.inMilliseconds;
@@ -152,7 +152,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     }
     catch(e)
     {
-
+      print(e.toString());
     }
 
     var widgets = <Widget>[];
@@ -160,7 +160,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     var rowChildren = <Widget>[];
     rowChildren.add(
       FlatButton(
-        child: Icon(Icons.arrow_back),
+        child: Icon(Icons.arrow_back, color: Colors.grey),
         onPressed: () {
           Navigator.pop(context);
         },
@@ -169,7 +169,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     rowChildren.add(
       Expanded(
         child:  Container(
-          margin: EdgeInsets.all(15.0),
+          margin: EdgeInsets.all(13.0),
           child: Align(
             alignment: Alignment.center,
             child: Text(
@@ -187,7 +187,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     );
     rowChildren.add(
       FlatButton(
-        child: Icon(Icons.arrow_drop_up),
+        child: Icon(Icons.arrow_drop_up, color: Colors.grey),
         onPressed: () {
 
         },
