@@ -7,7 +7,7 @@ final List<VideoContent> data = <VideoContent>[
       ["graphics/example_tile/example_layer5.png", "graphics/example_tile/example_layer4.png", "graphics/example_tile/example_layer3.png", "graphics/example_tile/example_layer2.png", "graphics/example_tile/example_layer1.png"],
       65000,
       "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4",
-      "graphics/example_tile/secretlocation_circle.png",
+      null,
       0xFF6C18AA),
   VideoContent("Blaster of the Universe Trailer",
       "Blasters of the Universe is the first of its kind, bringing the bullet hell genre into first person VR. Intense gameplay is heavily reliant on physical movement, requiring the player to duck, dodge, twist, turn, and maneuver their way through tons of enemies and hundreds of bullets.",
