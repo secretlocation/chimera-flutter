@@ -21,15 +21,6 @@ class LayeredImageState extends State<LayeredImage> {
   List<StreamSubscription<dynamic>> _streamSubscriptions =
   <StreamSubscription<dynamic>>[];
 
-
-  @override
-  void dispose() {
-    super.dispose();
-    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
-      subscription.cancel();
-    }
-  }
-
   void updateSensorFusion() {
     if (_gyroscopeValues == null) return null;
 
@@ -91,5 +82,13 @@ class LayeredImageState extends State<LayeredImage> {
     return Stack(
       children: imageLayers
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
   }
 }
