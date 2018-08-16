@@ -49,10 +49,10 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           Positioned(
-            left: (width * 0.35),
-            top: (height * 0.5 - (width * 0.15)),
-            width: (width * 0.3),
-            height: (width * 0.3),
+            left: (width * 0.3),
+            top: (height * 0.5 - (width * 0.2)),
+            width: (width * 0.4),
+            height: (width * 0.4),
             child:
             FlatButton(
                 onPressed: () {
@@ -63,7 +63,15 @@ class _ContentCard extends State<ContentCard>{
                 },
               child: new ConstrainedBox(
                 constraints: new BoxConstraints.expand(),
-                child: new Image(image: widget.data.playButton, fit: BoxFit.cover, gaplessPlayback: true),
+                child: Opacity(
+                  opacity: ((200.0 - widget.scrollPosition.abs()) / 150.0).clamp(0.0, 1.0) ,
+                  child: Stack(
+                    children: <Widget>[
+                      Image(image: widget.data.playButton, fit: BoxFit.contain, gaplessPlayback: true),
+                      Image(image: AssetImage("graphics/play.png"), fit: BoxFit.contain, gaplessPlayback: true),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
