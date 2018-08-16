@@ -13,7 +13,7 @@ class LayeredImage extends StatefulWidget {
 
 class LayeredImageState extends State<LayeredImage> {
   final List<double> modifiers = [1.0,0.8,0.7,0.5,0.1];
-  List<double> modifiersSensor = [10.0, 8.0, 5.0, 3.0, 1.0];
+  List<double> modifiersSensor;
 
   List<double> _gyroscopeValues = [0.0, 0.0, 0.0];
   List<double> _sensorFusion = [0.0, 0.0, 0.0];
@@ -24,7 +24,7 @@ class LayeredImageState extends State<LayeredImage> {
   void updateSensorFusion() {
     if (_gyroscopeValues == null) return null;
 
-    final double clampValue = 10.0;
+    final double clampValue = 75.0;
     if (_gyroscopeValues[0] > clampValue) _gyroscopeValues[0] = clampValue;
     if (_gyroscopeValues[0] < -clampValue) _gyroscopeValues[0] = -clampValue;
     if (_gyroscopeValues[1] > clampValue) _gyroscopeValues[1] = clampValue;
@@ -61,10 +61,10 @@ class LayeredImageState extends State<LayeredImage> {
 
     double imageWidth = screenWidth;
     double imageHeight = screenHeight;
-    double scaleFactor = 1.2;
+    double scaleFactor = 1.25;
 
     double modifiersMultiplier = screenWidth/1080;
-    modifiersSensor = [modifiersMultiplier*10.0, modifiersMultiplier*8.0, modifiersMultiplier*5.0, modifiersMultiplier*3.0, modifiersMultiplier*1.0];
+    modifiersSensor = [modifiersMultiplier*2.0, modifiersMultiplier*1.75, modifiersMultiplier*1.5, modifiersMultiplier*1.0, modifiersMultiplier*0.5];
 
     var imageLayers = <Widget>[];
     
