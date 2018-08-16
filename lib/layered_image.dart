@@ -12,13 +12,19 @@ class LayeredImage extends StatefulWidget {
 
 class LayeredImageState extends State<LayeredImage> {
   final List<double> modifiers = [0.9,0.8,0.7,0.6,0.1];
-  final List<double> modifiersSensor = [10.0, 8.0, 5.0, 3.0, 1.0];
+  List<double> modifiersSensor = [10.0, 8.0, 5.0, 3.0, 1.0];
 
   @override
   Widget build(BuildContext context) {
 
-    double imageWidth = MediaQuery.of(context).size.width;
-    double imageHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double imageWidth = screenWidth;
+    double imageHeight = screenHeight;
+
+    double modifiersMultiplier = screenWidth/1080;
+    modifiersSensor = [modifiersMultiplier*10.0, modifiersMultiplier*8.0, modifiersMultiplier*5.0, modifiersMultiplier*3.0, modifiersMultiplier*1.0];
 
     var imageLayers = <Widget>[];
     
