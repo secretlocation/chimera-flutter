@@ -65,4 +65,6 @@ flutter:
        - asset: fonts/Montserrat-Light.ttf
   assets:
     - graphics/
+    - graphics/tile_canada/
+    - graphics/tile_blasters/
     - graphics/example_tile/
