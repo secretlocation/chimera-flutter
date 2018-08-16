@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sensors/sensors.dart';
+import 'dart:async';
 
 class LayeredImage extends StatefulWidget {
-  const LayeredImage(this.scrollPosition, this.sensorFusion, this.images);
+  const LayeredImage(this.scrollPosition, this.images);
   final double scrollPosition;
-  final List<double> sensorFusion;
   final List<AssetImage> images;
 
   @override
@@ -13,6 +14,59 @@ class LayeredImage extends StatefulWidget {
 class LayeredImageState extends State<LayeredImage> {
   final List<double> modifiers = [0.9,0.8,0.7,0.6,0.1];
   List<double> modifiersSensor = [10.0, 8.0, 5.0, 3.0, 1.0];
+
+  List<double> _gyroscopeValues = [0.0, 0.0, 0.0];
+  List<double> _sensorGroundTruth = [0.0, 0.0, 0.0];
+  List<double> _sensorFusion = [0.0, 0.0, 0.0];
+
+  List<StreamSubscription<dynamic>> _streamSubscriptions =
+  <StreamSubscription<dynamic>>[];
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  void updateSensorFusion() {
+    if (_gyroscopeValues == null) return null;
+
+    final double clampValue = 10.0;
+    if (_gyroscopeValues[0] > clampValue) _gyroscopeValues[0] = clampValue;
+    if (_gyroscopeValues[0] < -clampValue) _gyroscopeValues[0] = -clampValue;
+    if (_gyroscopeValues[1] > clampValue) _gyroscopeValues[1] = clampValue;
+    if (_gyroscopeValues[1] < -clampValue) _gyroscopeValues[1] = -clampValue;
+
+    // starting offset
+//    if (_sensorGroundTruth == null) {
+//      _sensorGroundTruth = _gyroscopeValues;
+//    }
+
+    // Adjust for ground truth
+    _sensorFusion = [
+      _sensorFusion[0] + 0.5 * (_gyroscopeValues[0] - _sensorGroundTruth[0] - _sensorFusion[0]),
+      _sensorFusion[1] + 0.5 * (_gyroscopeValues[1] - _sensorGroundTruth[1] - _sensorFusion[1]), 0.0];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+    _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
+      setState(() {
+        _gyroscopeValues = <double>[
+          _gyroscopeValues[0] + event.y, _gyroscopeValues[1] + event.x, 0.0];
+        updateSensorFusion();
+      });
+    }));
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +84,7 @@ class LayeredImageState extends State<LayeredImage> {
     
     for(int i = 0; i < widget.images.length; i++) {
       imageLayers.add(Container(
-          transform: Matrix4.translationValues(modifiersSensor[i] * widget.sensorFusion[0] * modifiers[i], (widget.scrollPosition + (modifiersSensor[i] * widget.sensorFusion[1])) * modifiers[i], 0.0),
+          transform: Matrix4.translationValues(modifiersSensor[i] * _sensorFusion[0] * modifiers[i], (widget.scrollPosition + (modifiersSensor[i] * _sensorFusion[1])) * modifiers[i], 0.0),
           width: imageWidth,
           height: imageHeight,
           child: Image(image: widget.images[i]))

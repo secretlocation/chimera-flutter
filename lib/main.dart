@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chimera_flutter/data.dart';
 import 'package:chimera_flutter/content_card.dart';
-import 'package:sensors/sensors.dart';
-import 'dart:async';
 
 void main() => runApp(new MyApp());
 
@@ -54,13 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
   ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
   ValueNotifier<double> pageScrollPosition = ValueNotifier<double>(0.0);
 
-  List<double> _gyroscopeValues = [0.0, 0.0, 0.0];
-  List<double> _sensorGroundTruth;
-  List<double> _sensorFusion = [0.0, 0.0, 0.0];
-
-  List<StreamSubscription<dynamic>> _streamSubscriptions =
-  <StreamSubscription<dynamic>>[];
-
   @override
   Widget build(BuildContext context) {
 
@@ -76,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           if (notification.depth == 0 && notification is ScrollUpdateNotification) {
-            _sensorGroundTruth = null;
             pageCurrent.value = _pageController.page;
             pageScrollPosition.value = notification.metrics.pixels;
             setState(() {});
@@ -96,10 +86,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Create tiles
     double height = MediaQuery.of(context).size.height;
-    final List<Widget> tiles = [];
+    List<Widget> tiles = [];
     for (int i = 0; i < data.length; i++) {
       var element = data[i];
-      tiles.add(new ContentCard(element, pageScrollPosition.value - (i * height), _sensorFusion));
+      tiles.add(new ContentCard(element, pageScrollPosition.value - (i * height)));
     }
 
     final List<Widget> pages = <Widget>[];
@@ -128,53 +118,4 @@ class _MyHomePageState extends State<MyHomePage> {
     return pages;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
-      subscription.cancel();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
-      subscription.cancel();
-    }
-    _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
-      setState(() {
-        _gyroscopeValues = <double>[_gyroscopeValues[0] + event.y, _gyroscopeValues[1] + event.x, 0.0];
-        updateSensorFusion();
-      });
-    }));
-
-  }
-
-  void updateSensorFusion() {
-    if (_gyroscopeValues == null) return null;
-
-    final double clampValue = 10.0;
-    if (_gyroscopeValues[0] > clampValue) _gyroscopeValues[0] = clampValue;
-    if (_gyroscopeValues[0] < -clampValue) _gyroscopeValues[0] = -clampValue;
-    if (_gyroscopeValues[1] > clampValue) _gyroscopeValues[1] = clampValue;
-    if (_gyroscopeValues[1] < -clampValue) _gyroscopeValues[1] = -clampValue;
-
-//    final double returnSpeed = 0.1;
-//    if (_gyroscopeValues[0] > 0) _gyroscopeValues[0] -= returnSpeed;
-//    if (_gyroscopeValues[0] < 0) _gyroscopeValues[0] += returnSpeed;
-//    if (_gyroscopeValues[1] > 0) _gyroscopeValues[1] -= returnSpeed;
-//    if (_gyroscopeValues[1] < 0) _gyroscopeValues[1] += returnSpeed;
-
-    // starting offset
-    if (_sensorGroundTruth == null) {
-      _sensorGroundTruth = _gyroscopeValues;
-    }
-
-    // Adjust for ground truth
-    _sensorFusion = [
-      _sensorFusion[0] + 0.7 * (_gyroscopeValues[0] - _sensorGroundTruth[0] - _sensorFusion[0]),
-      _sensorFusion[1] + 0.7 * (_gyroscopeValues[1] - _sensorGroundTruth[1] - _sensorFusion[1]), 0.0];
-  }
 }
