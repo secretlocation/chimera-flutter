@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override void dispose() {
     super.dispose();
 
-    if (delayScroll != null) delayScroll.cancel()
+    if (delayScroll != null) delayScroll.cancel();
   }
 
   @override
