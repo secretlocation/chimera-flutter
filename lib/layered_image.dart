@@ -11,8 +11,8 @@ class LayeredImage extends StatefulWidget {
 }
 
 class LayeredImageState extends State<LayeredImage> {
-  final List<double> modifiers = [0.7,0.6,0.5,0.4,0.2];
-  final sensorModifier = 10.0;
+  final List<double> modifiers = [0.9,0.8,0.7,0.6,0.1];
+  final List<double> modifiersSensor = [10.0, 8.0, 5.0, 3.0, 1.0];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class LayeredImageState extends State<LayeredImage> {
     
     for(int i = 0; i < widget.images.length; i++) {
       imageLayers.add(Container(
-          transform: Matrix4.translationValues(sensorModifier * widget.sensorFusion[0] * modifiers[i], (widget.scrollPosition + (sensorModifier * widget.sensorFusion[1])) * modifiers[i], 0.0),
+          transform: Matrix4.translationValues(modifiersSensor[i] * widget.sensorFusion[0] * modifiers[i], (widget.scrollPosition + (modifiersSensor[i] * widget.sensorFusion[1])) * modifiers[i], 0.0),
           width: imageWidth,
           height: imageHeight,
           child: Image(image: widget.images[i]))

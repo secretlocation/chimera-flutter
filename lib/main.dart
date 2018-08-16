@@ -54,10 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
   ValueNotifier<double> pageScrollPosition = ValueNotifier<double>(0.0);
 
-  final double accel_alpha = 0.01;
-
-  List<double> _gyroscopeValues;
-  List<double> _accelerometerValues;
+  List<double> _gyroscopeValues = [0.0, 0.0, 0.0];
+  List<double> _sensorGroundTruth;
   List<double> _sensorFusion = [0.0, 0.0, 0.0];
 
   List<StreamSubscription<dynamic>> _streamSubscriptions =
@@ -77,9 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.black,
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
-          pageScrollPosition.value = notification.metrics.pixels;
           if (notification.depth == 0 && notification is ScrollUpdateNotification) {
+            _sensorGroundTruth = null;
             pageCurrent.value = _pageController.page;
+            pageScrollPosition.value = notification.metrics.pixels;
             setState(() {});
           }
           return false;
@@ -141,16 +140,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
     _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
       setState(() {
-        _gyroscopeValues = <double>[event.x, event.y, event.z];
-        updateSensorFusion();
-      });
-    }));
-
-    _streamSubscriptions.add(accelerometerEvents.listen((AccelerometerEvent event) {
-      setState(() {
-        _accelerometerValues = <double>[event.x, event.y, event.z];
+        _gyroscopeValues = <double>[_gyroscopeValues[0] + event.y, _gyroscopeValues[1] + event.x, 0.0];
         updateSensorFusion();
       });
     }));
@@ -158,11 +153,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateSensorFusion() {
-    if (_gyroscopeValues == null || _accelerometerValues == null) return null;
-    List<double> temp = [_gyroscopeValues[0] + _accelerometerValues[0], _gyroscopeValues[1] + _accelerometerValues[1], 0.0];
+    if (_gyroscopeValues == null) return null;
+
+    final double clampValue = 10.0;
+    if (_gyroscopeValues[0] > clampValue) _gyroscopeValues[0] = clampValue;
+    if (_gyroscopeValues[0] < -clampValue) _gyroscopeValues[0] = -clampValue;
+    if (_gyroscopeValues[1] > clampValue) _gyroscopeValues[1] = clampValue;
+    if (_gyroscopeValues[1] < -clampValue) _gyroscopeValues[1] = -clampValue;
+
+//    final double returnSpeed = 0.1;
+//    if (_gyroscopeValues[0] > 0) _gyroscopeValues[0] -= returnSpeed;
+//    if (_gyroscopeValues[0] < 0) _gyroscopeValues[0] += returnSpeed;
+//    if (_gyroscopeValues[1] > 0) _gyroscopeValues[1] -= returnSpeed;
+//    if (_gyroscopeValues[1] < 0) _gyroscopeValues[1] += returnSpeed;
+
+    // starting offset
+    if (_sensorGroundTruth == null) {
+      _sensorGroundTruth = _gyroscopeValues;
+    }
+
+    // Adjust for ground truth
     _sensorFusion = [
-      _sensorFusion[0] + accel_alpha * (temp[0] - _sensorFusion[0]),
-      _sensorFusion[1] + accel_alpha * (temp[1] - _sensorFusion[1]),
-      0.0];
+      _sensorFusion[0] + 0.7 * (_gyroscopeValues[0] - _sensorGroundTruth[0] - _sensorFusion[0]),
+      _sensorFusion[1] + 0.7 * (_gyroscopeValues[1] - _sensorGroundTruth[1] - _sensorFusion[1]), 0.0];
   }
 }
