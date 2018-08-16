@@ -6,12 +6,12 @@ import 'video_view.dart';
 import 'custom_material_page_route.dart';
 
 class ContentCard extends StatefulWidget {
-  const ContentCard(this.data, this.scrollPosition, this.sensorFusion);
+  const ContentCard(this.data, this.scrollPosition);
   final VideoContent data;
   final double scrollPosition;
-  final List<double> sensorFusion;
 
   _ContentCard createState() => new _ContentCard();
+
 }
 
 class _ContentCard extends State<ContentCard>{
@@ -33,7 +33,7 @@ class _ContentCard extends State<ContentCard>{
         children: <Widget>[
 
           Positioned(
-            child: LayeredImage(widget.scrollPosition, widget.sensorFusion, widget.data.thumbnail),
+            child: LayeredImage(widget.scrollPosition, widget.data.thumbnail),
             height: height,
             width: width,
           ),
