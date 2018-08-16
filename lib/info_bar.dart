@@ -43,7 +43,7 @@ class _InfoBar extends State<InfoBar> {
             convertMsToTimecode(widget.runtime),
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.grey
+                color: Color(0xFF686868)
             )
         ))
     );

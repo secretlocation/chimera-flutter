@@ -160,7 +160,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     var rowChildren = <Widget>[];
     rowChildren.add(
       FlatButton(
-        child: Icon(Icons.arrow_back, color: Colors.grey),
+        child: Icon(Icons.arrow_back, color: Color(0xFF686868)),
         onPressed: () {
           Navigator.pop(context);
         },
@@ -177,7 +177,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+                  color: Color(0xFF686868),
                 )
             )
           )
@@ -187,7 +187,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
     );
     rowChildren.add(
       FlatButton(
-        child: Icon(Icons.arrow_drop_up, color: Colors.grey),
+        child: Icon(Icons.arrow_drop_up, color: Color(0xFF686868)),
         onPressed: () {
 
         },
