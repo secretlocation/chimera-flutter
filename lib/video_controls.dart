@@ -117,23 +117,24 @@ class VideoControlsBottomBar extends StatefulWidget
 
 }
 
-class _VideoControlsBottomBarState extends State<VideoControlsBottomBar>
-{
+class _VideoControlsBottomBarState extends State<VideoControlsBottomBar> {
   int positionMs = 0;
 
-  void progressUpdate(Duration newProgress)
-  {
-    setState(() {
-    positionMs = newProgress.inMilliseconds;
-    });
+  VoidCallback listener;
+
+  _VideoControlsBottomBarState(){
+    listener = () {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    };
   }
 
   @override
   void initState() {
     super.initState();
-    widget.controller.position.then((value){
-      progressUpdate(value);
-    }).catchError((_){});
+    widget.controller.addListener(listener);
   }
 
   @override
@@ -141,6 +142,9 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar>
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    final int pos = widget.controller.value.position.inMilliseconds;
+    final int dur = widget.controller.value.duration.inMilliseconds;
 
     var widgets = <Widget>[];
 
@@ -168,7 +172,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar>
         Container(
             margin: EdgeInsets.all(15.0),
             child: Text(
-                convertMsToTimecode(widget.controller.value.duration.inMilliseconds - positionMs),
+                convertMsToTimecode(dur-pos),
                 style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -209,7 +213,7 @@ class _VideoControlsBottomBarState extends State<VideoControlsBottomBar>
 
   @override
   void deactivate() {
-    // TODO: implement deactivate
+    widget.controller.removeListener(listener);
     super.deactivate();
   }
 }
