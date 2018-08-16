@@ -53,12 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ValueNotifier<double> pageCurrent = ValueNotifier<double>(0.0);
   ValueNotifier<double> pageScrollPosition = ValueNotifier<double>(0.0);
-  Future delayScroll;
+  Timer delayScroll;
 
   @override void initState() {
     super.initState();
 
-    delayScroll = Future.delayed(Duration(seconds: 3), () {
+    delayScroll = Timer(Duration(seconds: 3), () {
       _pageController.animateToPage(1, duration: Duration(seconds: 1), curve: Curves.easeIn);
       delayScroll = null;
     });
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override void dispose() {
     super.dispose();
 
-    if (delayScroll != null) CancelableOperation.fromFuture(delayScroll).cancel();
+    if (delayScroll != null) delayScroll.cancel()
   }
 
   @override
