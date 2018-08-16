@@ -68,3 +68,5 @@ flutter:
     - graphics/tile_canada/
     - graphics/tile_blasters/
     - graphics/example_tile/
+    - graphics/tile_meditation/
+    - graphics/tile_vusr/
