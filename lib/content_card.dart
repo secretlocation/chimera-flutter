@@ -17,6 +17,7 @@ class ContentCard extends StatefulWidget {
 class _ContentCard extends State<ContentCard>{
 
   bool shouldBeShown = false;
+  double playButtonLength = 100.0;
 
   void showDescription(){
     shouldBeShown = !shouldBeShown;
@@ -24,18 +25,21 @@ class _ContentCard extends State<ContentCard>{
   }
 
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
+      width: screenWidth,
+      height: screenHeight,
+      alignment: Alignment.bottomLeft,
       child: ClipRect(
         child: Stack(
         children: <Widget>[
 
           Positioned(
+            width: screenWidth,
+            height: screenHeight,
             child: LayeredImage(widget.scrollPosition, widget.data.thumbnail),
-            height: height,
-            width: width,
           ),
 
           Positioned(
@@ -49,12 +53,11 @@ class _ContentCard extends State<ContentCard>{
           ),
 
           Positioned(
-            left: (width * 0.3),
-            top: (height * 0.5 - (width * 0.2)),
-            width: (width * 0.4),
-            height: (width * 0.4),
-            child:
-            FlatButton(
+            left: (screenWidth-playButtonLength)/2,
+            top: (screenHeight-playButtonLength)/2 * 1.075,
+            width: playButtonLength,
+            height: playButtonLength,
+            child: FlatButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -79,9 +82,6 @@ class _ContentCard extends State<ContentCard>{
         ],
       ),
       ),
-      alignment: Alignment.bottomLeft,
-      height: height,
-      width: width,
     );
   }
 }
