@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'video_content.dart';
+import 'video_controls.dart';
 
 class VideoView extends StatefulWidget
 {
@@ -14,20 +15,7 @@ class _VideoViewState extends State<VideoView> {
 
   VideoPlayerController _controller;
   bool _isLoaded = false;
-  bool _isPlaying = false;
-  VoidCallback playingListener;
-
-  // Initialize the playing listener
-  _VideoViewState(){
-    playingListener = () {
-      final bool isPlaying = _controller.value.isPlaying;
-      if (isPlaying != _isPlaying) {
-        setState(() {
-          _isPlaying = isPlaying;
-        });
-      }
-    };
-  }
+  bool _controlsVisible = false;
 
   void playAfterInit(_){
     _isLoaded = true;
@@ -51,7 +39,6 @@ class _VideoViewState extends State<VideoView> {
     _controller = VideoPlayerController.network(
       widget.currentVideo.videoUrl
     )
-      ..addListener(playingListener)
       ..setVolume(1.0);
 
     // Initialize the player with content, handling errors
@@ -68,133 +55,44 @@ class _VideoViewState extends State<VideoView> {
   void deactivate() {
     super.deactivate();
     _controller
-      ..removeListener(playingListener)
       ..setVolume(0.0);
   }
 
   @override
   Widget build(BuildContext context) {
     var childs = <Widget>[];
-
-    childs.add(VideoPlayer(_controller));
-    if(!_isLoaded) childs.add(LoadingSpinner());
-    childs.add(VideoControlsBar(_controller));
-
-    return new Stack(
-      children: childs,
-    );
-  }
-}
-
-/*
-class _VideoViewState extends State<VideoView> {
-  VideoPlayerController _controller;
-  bool _isPlaying = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.network(
-      // Example content sourced from https://github.com/SamsungInternet/examples
-      'https://github.com/SamsungInternet/examples/blob/master/360-video/paris-by-diego.mp4?raw=true',
-    )
-      ..addListener(() {
-        final bool isPlaying = _controller.value.isPlaying;
-        if (isPlaying != _isPlaying) {
+    childs.add(GestureDetector(
+        onTap: () {
           setState(() {
-            _isPlaying = isPlaying;
+            _controlsVisible = !_controlsVisible;
           });
-        }
-      })
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
-  }
+        },
+        child: VideoPlayer(_controller),
+    ));
+    if(!_isLoaded){
+      childs.add(LoadingSpinner(widget.currentVideo.customColor));
+    }
+    childs.add(
+        AnimatedOpacity(
+          opacity: _controlsVisible ? 1.0: 0.0,
+          duration: Duration(milliseconds: 200),
+          child: VideoControls(controller: _controller,
+            content: widget.currentVideo,
+            isLoaded: _isLoaded,
+            isInteractable: _controlsVisible,),
+        ));
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Video Demo',
-      home: Scaffold(
-        body: Center(
-          child: _controller.value.initialized
-              ? AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          )
-              : Container(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _controller.value.isPlaying
-              ? _controller.pause
-              : _controller.play,
-          child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/
-
-
-class VideoControlsBar extends StatelessWidget
-{
-
-  VideoPlayerController controller;
-
-  VideoControlsBar(this.controller);
-
-  @override
-  Widget build(BuildContext context) {
-
-
-    return new Align(
-      alignment: Alignment.bottomCenter,
-      child: new Container(
-        constraints: BoxConstraints(minWidth: 100.0, maxWidth: 800-40.0),
-        decoration: new ShapeDecoration(
-            shadows: [BoxShadow(spreadRadius: 1.0)],
-            color: Colors.white,
-            shape: Border.all(),
-        ),
-        child: new ButtonBar(
-          children: <Widget>[
-            new SizedBox(
-              width: 40.0,
-              child: new RaisedButton(
-                child: new Text("<"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            new RaisedButton(
-              child: new Text(convertMsToTimecode(1234)),
-              onPressed: (){},
-            ),
-            new SizedBox(
-              width: 100.0,
-              child: new VideoProgressIndicator(
-                controller,
-                allowScrubbing: true,
-              ),
-            ),
-            new RaisedButton(
-              child: new Text('Info'),
-              onPressed: (){},
-            ),
-          ],
-        ),
-      ),
+    return Stack(
+      children: childs,
     );
   }
 }
 
 class LoadingSpinner extends StatelessWidget
 {
+  Color mainColor;
+  LoadingSpinner(this.mainColor);
+
   @override
   Widget build(BuildContext context) {
 
@@ -209,12 +107,9 @@ class LoadingSpinner extends StatelessWidget
       top: (height - spinnerHeight) * 0.5,
       width: spinnerWidth,
       height: spinnerHeight,
-      child: new CircularProgressIndicator(),
+      child: new CircularProgressIndicator(
+        backgroundColor: mainColor,
+      ),
     );
   }
-}
-
-String convertMsToTimecode(int ms) {
-  Duration dur = Duration(milliseconds: ms);
-  return dur.inMinutes.toString() + ":" + (dur.inSeconds.remainder(60)).toString().padLeft(2, '0');
 }
