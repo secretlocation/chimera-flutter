@@ -16,7 +16,6 @@ class LayeredImageState extends State<LayeredImage> {
   List<double> modifiersSensor = [10.0, 8.0, 5.0, 3.0, 1.0];
 
   List<double> _gyroscopeValues = [0.0, 0.0, 0.0];
-  List<double> _sensorGroundTruth = [0.0, 0.0, 0.0];
   List<double> _sensorFusion = [0.0, 0.0, 0.0];
 
   List<StreamSubscription<dynamic>> _streamSubscriptions =
@@ -40,15 +39,10 @@ class LayeredImageState extends State<LayeredImage> {
     if (_gyroscopeValues[1] > clampValue) _gyroscopeValues[1] = clampValue;
     if (_gyroscopeValues[1] < -clampValue) _gyroscopeValues[1] = -clampValue;
 
-    // starting offset
-//    if (_sensorGroundTruth == null) {
-//      _sensorGroundTruth = _gyroscopeValues;
-//    }
-
     // Adjust for ground truth
     _sensorFusion = [
-      _sensorFusion[0] + 0.5 * (_gyroscopeValues[0] - _sensorGroundTruth[0] - _sensorFusion[0]),
-      _sensorFusion[1] + 0.5 * (_gyroscopeValues[1] - _sensorGroundTruth[1] - _sensorFusion[1]), 0.0];
+      _sensorFusion[0] + 0.5 * (_gyroscopeValues[0] - _sensorFusion[0]),
+      _sensorFusion[1] + 0.5 * (_gyroscopeValues[1] - _sensorFusion[1]), 0.0];
   }
 
   @override
