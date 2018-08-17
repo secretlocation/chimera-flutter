@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chimera_flutter/data.dart';
-import 'package:chimera_flutter/content_card.dart';
+import 'package:chimera/data.dart';
+import 'package:chimera/content_card.dart';
 import 'dart:async';
 import 'package:async/async.dart';
 
@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Vusr Chimera',
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         // This is the theme of your application.
         //
