@@ -1,7 +1,7 @@
-import 'package:chimera_flutter/video_content.dart';
+import 'package:chimera/video_content.dart';
 import 'package:flutter/material.dart';
-import 'package:chimera_flutter/info_bar.dart';
-import 'package:chimera_flutter/layered_image.dart';
+import 'package:chimera/info_bar.dart';
+import 'package:chimera/layered_image.dart';
 import 'video_view.dart';
 import 'custom_material_page_route.dart';
 
