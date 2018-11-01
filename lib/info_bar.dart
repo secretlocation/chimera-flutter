@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chimera_flutter/description_widget.dart';
+import 'package:chimera/description_widget.dart';
 import 'ms_to_timecode.dart';
 
 class InfoBar extends StatefulWidget {
